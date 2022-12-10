@@ -73,7 +73,7 @@ public class Flights {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Flights flights = (Flights) o;
-        return id == flights.id && maxNumberOfPassengers == flights.maxNumberOfPassengers && nameOfAirline.equals(flights.nameOfAirline) && destination.equals(flights.destination) && pilot.equals(flights.pilot) && dateOfDeparture.equals(flights.dateOfDeparture);
+        return id == flights.id;
     }
 
     @Override
