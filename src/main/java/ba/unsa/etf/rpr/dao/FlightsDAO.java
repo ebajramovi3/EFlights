@@ -9,6 +9,4 @@ public interface FlightsDAO<T> extends DAO {
     List<Flights> searchByDate(Date dateOfFlight);
 
     List<Flights> searchByAirline(String nameOfAirline);
-
-    List<Flights> searchById(int id);
 }
