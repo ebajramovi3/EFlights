@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface DestinationsDAO<T> extends DAO{
 
-    List<Destinations> searchByCity();
+    List<Destinations> searchByCity(String nameOfCity);
 
-    List<Destinations> searchByCountry();
+    List<Destinations> searchByCountry(String nameOfCountry);
 
-    List<Destinations> getById();
+    List<Destinations> getById(int id);
 }
