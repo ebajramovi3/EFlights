@@ -8,16 +8,16 @@ import java.util.Objects;
 public class Destinations {
     private int departureId;
     private String city, country;
-    private int arrivalId;
+    private Destinations arrival;
 
     public Destinations() {
     }
 
-    public Destinations(int departureId, String city, String country, int arrivalId) {
+    public Destinations(int departureId, String city, String country, Destinations arrival) {
         this.departureId = departureId;
         this.city = city;
         this.country = country;
-        this.arrivalId = arrivalId;
+        this.arrival = arrival;
     }
 
     public int getDepartureId() {
@@ -32,9 +32,6 @@ public class Destinations {
         return country;
     }
 
-    public int getArrivalId() {
-        return arrivalId;
-    }
 
     public void setDepartureId(int departureId) {
         this.departureId = departureId;
@@ -48,8 +45,12 @@ public class Destinations {
         this.country = country;
     }
 
-    public void setArrivalId(int arrivalId) {
-        this.arrivalId = arrivalId;
+    public Destinations getArrival() {
+        return arrival;
+    }
+
+    public void setArrival(Destinations arrival) {
+        this.arrival = arrival;
     }
 
     @Override
@@ -57,11 +58,11 @@ public class Destinations {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Destinations that = (Destinations) o;
-        return departureId == that.departureId && arrivalId == that.arrivalId && city.equals(that.city) && country.equals(that.country);
+        return departureId == that.departureId && city.equals(that.city) && country.equals(that.country) && arrival.equals(that.arrival);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(departureId, city, country, arrivalId);
+        return Objects.hash(departureId, city, country, arrival);
     }
 }
