@@ -10,6 +10,9 @@ public class Destinations {
     private String city, country;
     private int arrivalId;
 
+    public Destinations() {
+    }
+
     public Destinations(int departureId, String city, String country, int arrivalId) {
         this.departureId = departureId;
         this.city = city;
