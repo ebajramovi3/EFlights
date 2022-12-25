@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,27 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
      */
     @Override
     public List<Arrival> getByCity(String cityOfDeparture) {
-        return null;
+        String query = "SELECT * FROM Arrival WHERE city = ?";
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            statement.setString(1, cityOfDeparture);
+            ResultSet rs = statement.executeQuery();
+
+            List<Arrival> arrivals = new ArrayList<>();
+            while(rs.next()){
+                Arrival arrival = new Arrival();
+                arrival.setArrivalId(rs.getInt("id"));
+                arrival.setCountry(rs.getString("country"));
+                arrival.setCity(rs.getString("city"));
+                arrival.setDateOfArrival(rs.getDate("date"));
+
+                arrivals.add(arrival);
+            }
+            rs.close();
+            return arrivals;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
