@@ -6,17 +6,18 @@ import java.util.Objects;
 public class Flights {
     private int id;
     private String nameOfAirline;
-    private int maxNumberOfPassengers;
-    private Destinations destination;
-    private Persons pilot;
+    private int maxNumberOfPassengers, maxNumberOfBusinessClass, priceEconomyClass, priceBusinessClass;
+    private Departure destination;
     private Date dateOfDeparture;
 
-    public Flights(int id, String nameOfAirline, int maxNumberOfPassengers, Destinations destination, Persons pilot, Date dateOfDeparture) {
+    public Flights(int id, String nameOfAirline, int maxNumberOfPassengers, int maxNumberOfBusinessClass, int priceEconomyClass, int priceBusinessClass, Departure destination, Date dateOfDeparture) {
         this.id = id;
         this.nameOfAirline = nameOfAirline;
         this.maxNumberOfPassengers = maxNumberOfPassengers;
+        this.maxNumberOfBusinessClass = maxNumberOfBusinessClass;
+        this.priceEconomyClass = priceEconomyClass;
+        this.priceBusinessClass = priceBusinessClass;
         this.destination = destination;
-        this.pilot = pilot;
         this.dateOfDeparture = dateOfDeparture;
     }
 
@@ -44,20 +45,12 @@ public class Flights {
         this.maxNumberOfPassengers = maxNumberOfPassengers;
     }
 
-    public Destinations getDestination() {
+    public Departure getDestination() {
         return destination;
     }
 
-    public void setDestination(Destinations destination) {
+    public void setDestination(Departure destination) {
         this.destination = destination;
-    }
-
-    public Persons getPilot() {
-        return pilot;
-    }
-
-    public void setPilot(Persons pilot) {
-        this.pilot = pilot;
     }
 
     public Date getDateOfDeparture() {
@@ -66,6 +59,33 @@ public class Flights {
 
     public void setDateOfDeparture(Date dateOfDeparture) {
         this.dateOfDeparture = dateOfDeparture;
+    }
+
+    public Flights() {
+    }
+
+    public int getMaxNumberOfBusinessClass() {
+        return maxNumberOfBusinessClass;
+    }
+
+    public void setMaxNumberOfBusinessClass(int maxNumberOfBusinessClass) {
+        this.maxNumberOfBusinessClass = maxNumberOfBusinessClass;
+    }
+
+    public int getPriceEconomyClass() {
+        return priceEconomyClass;
+    }
+
+    public void setPriceEconomyClass(int priceEconomyClass) {
+        this.priceEconomyClass = priceEconomyClass;
+    }
+
+    public int getPriceBusinessClass() {
+        return priceBusinessClass;
+    }
+
+    public void setPriceBusinessClass(int priceBusinessClass) {
+        this.priceBusinessClass = priceBusinessClass;
     }
 
     @Override
@@ -78,6 +98,6 @@ public class Flights {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameOfAirline, maxNumberOfPassengers, destination, pilot, dateOfDeparture);
+        return Objects.hash(id, nameOfAirline, maxNumberOfPassengers, maxNumberOfBusinessClass, priceEconomyClass, priceBusinessClass, destination, dateOfDeparture);
     }
 }
