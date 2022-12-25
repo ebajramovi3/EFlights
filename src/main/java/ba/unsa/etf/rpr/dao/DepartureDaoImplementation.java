@@ -199,6 +199,29 @@ public class DepartureDaoImplementation extends SQLConnection implements Departu
      */
     @Override
     public List<Departure> getByDate(Date dateOfDeparture) {
-        return null;
+        String query = "SELECT * FROM Departure WHERE date = ?";
+        try{
+            List<Departure> departures = new ArrayList<>();
+
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            statement.setDate(1, (java.sql.Date) dateOfDeparture);
+
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                Departure departure = new Departure();
+
+                departure.setDepartureId(rs.getInt("id"));
+                departure.setCountry(rs.getString("country"));
+                departure.setCity("city");
+                departure.setDateOfDeparture(rs.getDate("date"));
+                departure.setArrival(new ArrivalDaoImplementation().getById(rs.getInt("arrivalId")));
+
+                departures.add(departure);
+            }
+            rs.close();
+            return departures;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
