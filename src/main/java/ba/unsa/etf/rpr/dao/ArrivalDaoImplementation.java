@@ -43,7 +43,7 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
      */
     @Override
     public Arrival update(Arrival item) {
-        String insert = "UPDATE Departure SET country = ?, city = ?, date = ? WHERE id = ?";
+        String insert = "UPDATE Arrival SET country = ?, city = ?, date = ? WHERE id = ?";
         try {
             PreparedStatement statement = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
 
