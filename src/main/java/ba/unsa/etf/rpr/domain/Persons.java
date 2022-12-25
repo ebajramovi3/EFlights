@@ -8,14 +8,19 @@ public class Persons {
     private Flights destination;
     private String citizenship;
     private Date dateOfBirth;
+    private boolean checkIn, businessClass;
+    private Flights flight;
 
-    public Persons(String passportId, String firstName, String lastName, Flights destination, String citizenship, Date dateOfBirth) {
+    public Persons(String passportId, String firstName, String lastName, Flights destination, String citizenship, Date dateOfBirth, boolean checkIn, boolean businessClass, Flights flight) {
         this.passportId = passportId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.destination = destination;
         this.citizenship = citizenship;
         this.dateOfBirth = dateOfBirth;
+        this.checkIn = checkIn;
+        this.businessClass = businessClass;
+        this.flight = flight;
     }
 
     public String getPassportId() {
@@ -66,6 +71,30 @@ public class Persons {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public boolean isCheckIn() {
+        return checkIn;
+    }
+
+    public void setCheckIn(boolean checkIn) {
+        this.checkIn = checkIn;
+    }
+
+    public boolean isBusinessClass() {
+        return businessClass;
+    }
+
+    public void setBusinessClass(boolean businessClass) {
+        this.businessClass = businessClass;
+    }
+
+    public Flights getFlight() {
+        return flight;
+    }
+
+    public void setFlight(Flights flight) {
+        this.flight = flight;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,6 +105,6 @@ public class Persons {
 
     @Override
     public int hashCode() {
-        return Objects.hash(passportId, firstName, lastName, destination, citizenship, dateOfBirth);
+        return Objects.hash(passportId, firstName, lastName, destination, citizenship, dateOfBirth, checkIn, businessClass, flight);
     }
 }
