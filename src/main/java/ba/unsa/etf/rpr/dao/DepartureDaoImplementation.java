@@ -71,7 +71,25 @@ public class DepartureDaoImplementation extends SQLConnection implements Departu
      */
     @Override
     public Departure add(Departure item) {
-        return null;
+        String add = "INSERT INTO Departure(country, city, date, arrivalId) VALUES (?)";
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(add, Statement.RETURN_GENERATED_KEYS);
+
+            statement.setString(1, item.getCountry());
+            statement.setString(2, item.getCity());
+            statement.setDate(3, (java.sql.Date) item.getDateOfDeparture());
+            statement.setInt(4, item.getArrival().getArrivalId());
+
+            statement.executeUpdate();
+
+            ResultSet rs = statement.getGeneratedKeys();
+            rs.next();
+
+            item.setDepartureId(rs.getInt(1));
+            return item;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
