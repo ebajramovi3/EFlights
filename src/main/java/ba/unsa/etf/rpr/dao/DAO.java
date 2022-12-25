@@ -5,7 +5,7 @@ import java.util.List;
 public interface DAO<T, S> {
     public T update(T item);
 
-    public T searchById(S id);
+    public T getById(S id);
 
     public T add(T item);
 
