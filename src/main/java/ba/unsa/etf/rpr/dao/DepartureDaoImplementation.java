@@ -7,6 +7,7 @@ import ba.unsa.etf.rpr.domain.Departure;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +19,21 @@ public class DepartureDaoImplementation extends SQLConnection implements Departu
      */
     @Override
     public Departure update(Departure item) {
-        String insert = "UPDATE Departure SET id = ?, country, city, date, arrivalId";
-        return null;
+        String insert = "UPDATE Departure SET country = ?, city = ?, date = ?, arrivalId = ? WHERE id = ?";
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+
+            statement.setString(1, item.getCountry());
+            statement.setString(2, item.getCity());
+            statement.setDate(3, (java.sql.Date) item.getDateOfDeparture());
+            statement.setInt(4, item.getArrival().getArrivalId());
+            statement.setInt(5, item.getDepartureId());
+
+            statement.executeUpdate();
+            return item;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
