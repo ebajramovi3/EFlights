@@ -150,6 +150,25 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
      */
     @Override
     public List<Arrival> getAll() {
-        return null;
+        String query = "SELECT * FROM Arrival";
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+
+            List<Arrival> arrivals = new ArrayList<>();
+            while(rs.next()){
+                Arrival arrival = new Arrival();
+                arrival.setArrivalId(rs.getInt("id"));
+                arrival.setCountry(rs.getString("country"));
+                arrival.setCity(rs.getString("city"));
+                arrival.setDateOfArrival(rs.getDate("date"));
+
+                arrivals.add(arrival);
+            }
+            rs.close();
+            return arrivals;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
