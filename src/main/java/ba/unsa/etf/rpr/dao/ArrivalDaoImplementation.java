@@ -2,6 +2,9 @@ package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Arrival;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +51,25 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
      */
     @Override
     public Arrival getById(Integer id) {
+        String query = "SELECT * FROM Arrival WHERE id = ?";
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+
+            if(rs.next()){
+                Arrival arrival = new Arrival();
+                arrival.setArrivalId(rs.getInt("id"));
+                arrival.setCountry(rs.getString("country"));
+                arrival.setCity(rs.getString("city"));
+                arrival.setDateOfArrival(rs.getDate("date"));
+
+                rs.close();
+                return arrival;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 

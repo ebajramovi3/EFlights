@@ -40,7 +40,7 @@ public class DepartureDaoImplementation extends SQLConnection implements Departu
                 departure.setCountry(rs.getString("country"));
                 departure.setCity("city");
                 departure.setDateOfDeparture(rs.getDate("date"));
-                departure.setArrival(new ArrivalDaoImplementation().getById());
+                departure.setArrival(new ArrivalDaoImplementation().getById(rs.getInt("arrivalId")));
 
                 rs.close();
                 return departure;
