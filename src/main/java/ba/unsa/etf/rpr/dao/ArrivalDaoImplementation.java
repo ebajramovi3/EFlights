@@ -5,6 +5,7 @@ import ba.unsa.etf.rpr.domain.Arrival;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.List;
 
@@ -42,7 +43,20 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
      */
     @Override
     public Arrival update(Arrival item) {
-        return null;
+        String insert = "UPDATE Departure SET country = ?, city = ?, date = ? WHERE id = ?";
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+
+            statement.setString(1, item.getCountry());
+            statement.setString(2, item.getCity());
+            statement.setDate(3, (java.sql.Date) item.getDateOfArrival());
+            statement.setInt(5, item.getArrivalId());
+
+            statement.executeUpdate();
+            return item;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
