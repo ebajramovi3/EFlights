@@ -3,14 +3,14 @@ package ba.unsa.etf.rpr.dao;
 import java.util.List;
 
 public interface DAO<T, S> {
-    T update(T item);
+    public T update(T item);
 
-    T searchById(S id);
+    public T searchById(S id);
 
-    T add(T item);
+    public T add(T item);
 
-    void delete(S id);
+    public void delete(S id);
 
-    List<T> getAll();
+    public List<T> getAll();
 }
 
