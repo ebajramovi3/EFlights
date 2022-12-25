@@ -10,12 +10,14 @@ public class Departure {
     private int departureId;
     private String city, country;
     private Date dateOfDeparture;
+    private Arrival arrival;
 
-    public Departure(int departureId, String city, String country, Date dateOfDeparture) {
+    public Departure(int departureId, String city, String country, Date dateOfDeparture, Arrival arrival) {
         this.departureId = departureId;
         this.city = city;
         this.country = country;
         this.dateOfDeparture = dateOfDeparture;
+        this.arrival = arrival;
     }
 
     public Departure() {
@@ -23,6 +25,14 @@ public class Departure {
 
     public int getDepartureId() {
         return departureId;
+    }
+
+    public Arrival getArrival() {
+        return arrival;
+    }
+
+    public void setArrival(Arrival arrival) {
+        this.arrival = arrival;
     }
 
     public void setDepartureId(int departureId) {
@@ -63,6 +73,6 @@ public class Departure {
 
     @Override
     public int hashCode() {
-        return Objects.hash(departureId, city, country, dateOfDeparture);
+        return Objects.hash(departureId, city, country, dateOfDeparture, arrival);
     }
 }
