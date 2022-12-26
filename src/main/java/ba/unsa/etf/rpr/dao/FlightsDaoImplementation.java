@@ -1,0 +1,99 @@
+package ba.unsa.etf.rpr.dao;
+
+import ba.unsa.etf.rpr.domain.Arrival;
+import ba.unsa.etf.rpr.domain.Flights;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class FlightsDaoImplementation extends SQLConnection implements FlightsDAO{
+
+    /**
+     * @param item
+     * @return
+     */
+    @Override
+    public Object update(Object item) {
+        return null;
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public Object getById(Object id) {
+        return null;
+    }
+
+    /**
+     * @param item
+     * @return
+     */
+    @Override
+    public Object add(Object item) {
+        return null;
+    }
+
+    /**
+     * @param id
+     */
+    @Override
+    public void delete(Object id) {
+
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public List<Flights> getAll() {
+        String query = "SELECT * FROM Flights";
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+
+            List<Flights> flights = new ArrayList<>();
+            while(rs.next()){
+                Flights flight = new Flights();
+
+                flight.setId(rs.getInt("id"));
+                flight.setNameOfAirline(rs.getString("Airline"));
+                flight.setMaxNumberOfPassengers(rs.getInt("max"));
+                flight.setMaxNumberOfBusinessClass(rs.getInt("max"));
+                flight.setPriceBusinessClass(rs.getInt("price"));
+                flight.setPriceEconomyClass(rs.getInt("price"));
+                flight.setDestination(new DepartureDaoImplementation().getById(rs.getInt("departureId")));
+                flight.setDateOfDeparture(rs.getDate("date"));
+
+                flights.add(flight);
+            }
+            rs.close();
+            return flights;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * @param dateOfFlight
+     * @return
+     */
+    @Override
+    public List<Flights> getByDate(Date dateOfFlight) {
+        return null;
+    }
+
+    /**
+     * @param nameOfAirline
+     * @return
+     */
+    @Override
+    public List<Flights> getByAirline(String nameOfAirline) {
+        return null;
+    }
+}

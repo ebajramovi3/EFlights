@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface FlightsDAO<T> extends DAO<Flights, Integer> {
-    List<Flights> searchByDate(Date dateOfFlight);
+    List<Flights> getByDate(Date dateOfFlight);
 
-    List<Flights> searchByAirline(String nameOfAirline);
+    List<Flights> getByAirline(String nameOfAirline);
 }
