@@ -72,7 +72,7 @@ public class DepartureDaoImplementation extends SQLConnection implements Departu
      */
     @Override
     public Departure add(Departure item) {
-        String add = "INSERT INTO Departure(country, city, date, arrivalId) VALUES (?)";
+        String add = "INSERT INTO Departure(country, city, date, arrivalId) VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement statement = this.connection.prepareStatement(add, Statement.RETURN_GENERATED_KEYS);
 
@@ -98,7 +98,15 @@ public class DepartureDaoImplementation extends SQLConnection implements Departu
      */
     @Override
     public void delete(Integer id) {
+        String delete = "DELETE FROM Departure WHERE id = ?";
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(delete, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, id);
 
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
