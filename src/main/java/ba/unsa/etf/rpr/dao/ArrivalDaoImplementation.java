@@ -111,7 +111,7 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
             statement.setString(1, item.getCountry());
             statement.setString(2, item.getCity());
             statement.setDate(3, (java.sql.Date) item.getDateOfArrival());
-            statement.setInt(5, item.getArrivalId());
+            statement.setInt(4, item.getArrivalId());
 
             statement.executeUpdate();
             return item;
@@ -154,7 +154,25 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
      */
     @Override
     public Arrival add(Arrival item) {
-        return null;
+        String insert = "INSERT INTO Arrival(country, city, date) VALUES (?, ?, ?)";
+
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, item.getCountry());
+            statement.setString(2, item.getCity());
+            statement.setDate(3, (java.sql.Date) item.getDateOfArrival());
+
+            statement.executeUpdate();
+
+            ResultSet rs = statement.getGeneratedKeys();
+            rs.next();
+
+            item.setArrivalId(rs.getInt(1));
+            return item;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     /**
