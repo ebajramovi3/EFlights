@@ -94,7 +94,32 @@ public class FlightsDaoImplementation extends SQLConnection implements FlightsDA
      */
     @Override
     public List<Flights> getByDate(Date dateOfFlight) {
-        return null;
+        String query = "SELECT * FROM Flights WHERE date = ?";
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            statement.setDate(1, (java.sql.Date) dateOfFlight);
+            ResultSet rs = statement.executeQuery();
+
+            List<Flights> flights = new ArrayList<>();
+            while(rs.next()){
+                Flights flight = new Flights();
+
+                flight.setId(rs.getInt("id"));
+                flight.setNameOfAirline(rs.getString("Airline"));
+                flight.setMaxNumberOfPassengers(rs.getInt("max"));
+                flight.setMaxNumberOfBusinessClass(rs.getInt("max"));
+                flight.setPriceBusinessClass(rs.getInt("price"));
+                flight.setPriceEconomyClass(rs.getInt("price"));
+                flight.setDestination(new DepartureDaoImplementation().getById(rs.getInt("departureId")));
+                flight.setDateOfDeparture(rs.getDate("date"));
+
+                flights.add(flight);
+            }
+            rs.close();
+            return flights;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
