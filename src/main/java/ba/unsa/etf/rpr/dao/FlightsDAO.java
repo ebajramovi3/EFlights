@@ -8,5 +8,4 @@ import java.util.List;
 public interface FlightsDAO extends DAO<Flights, Integer> {
     List<Flights> getByDate(Date dateOfFlight);
 
-    List<Flights> getByAirline(String nameOfAirline);
 }

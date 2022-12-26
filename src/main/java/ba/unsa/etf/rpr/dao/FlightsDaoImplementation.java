@@ -122,15 +122,6 @@ public class FlightsDaoImplementation extends SQLConnection implements FlightsDA
         }
     }
 
-    /**
-     * @param nameOfAirline
-     * @return
-     */
-    @Override
-    public List<Flights> getByAirline(String nameOfAirline) {
-        return null;
-    }
-
 
 
 }
