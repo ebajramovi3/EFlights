@@ -29,6 +29,31 @@ public class FlightsDaoImplementation extends SQLConnection implements FlightsDA
      */
     @Override
     public Flights getById(Integer id) {
+        String query = "SELECT * FROM Flights WHERE id = ?";
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                Flights flight = new Flights();
+
+                flight.setId(rs.getInt("id"));
+                flight.setNameOfAirline(rs.getString("Airline"));
+                flight.setMaxNumberOfPassengers(rs.getInt("max"));
+                flight.setMaxNumberOfBusinessClass(rs.getInt("max"));
+                flight.setPriceBusinessClass(rs.getInt("price"));
+                flight.setPriceEconomyClass(rs.getInt("price"));
+                flight.setDestination(new DepartureDaoImplementation().getById(rs.getInt("departureId")));
+                flight.setDateOfDeparture(rs.getDate("date"));
+
+                rs.close();
+                return flight;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
@@ -61,7 +86,8 @@ public class FlightsDaoImplementation extends SQLConnection implements FlightsDA
      * @return
      */
     @Override
-    public List<Flights> getAll() {String query = "SELECT * FROM Flights";
+    public List<Flights> getAll() {
+        String query = "SELECT * FROM Flights";
         try {
             PreparedStatement statement = this.connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
