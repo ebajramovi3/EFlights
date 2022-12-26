@@ -5,7 +5,7 @@ import ba.unsa.etf.rpr.domain.Flights;
 import java.util.Date;
 import java.util.List;
 
-public interface FlightsDAO<T> extends DAO<Flights, Integer> {
+public interface FlightsDAO extends DAO<Flights, Integer> {
     List<Flights> getByDate(Date dateOfFlight);
 
     List<Flights> getByAirline(String nameOfAirline);

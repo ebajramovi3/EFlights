@@ -6,18 +6,20 @@ import ba.unsa.etf.rpr.domain.Flights;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class FlightsDaoImplementation extends SQLConnection implements FlightsDAO{
 
+
     /**
      * @param item
      * @return
      */
     @Override
-    public Object update(Object item) {
+    public Flights update(Flights item) {
         return null;
     }
 
@@ -26,7 +28,7 @@ public class FlightsDaoImplementation extends SQLConnection implements FlightsDA
      * @return
      */
     @Override
-    public Object getById(Object id) {
+    public Flights getById(Integer id) {
         return null;
     }
 
@@ -35,7 +37,7 @@ public class FlightsDaoImplementation extends SQLConnection implements FlightsDA
      * @return
      */
     @Override
-    public Object add(Object item) {
+    public Flights add(Flights item) {
         return null;
     }
 
@@ -43,16 +45,23 @@ public class FlightsDaoImplementation extends SQLConnection implements FlightsDA
      * @param id
      */
     @Override
-    public void delete(Object id) {
+    public void delete(Integer id) {
+        String delete = "DELETE FROM Flights WHERE id = ?";
 
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(delete, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
      * @return
      */
     @Override
-    public List<Flights> getAll() {
-        String query = "SELECT * FROM Flights";
+    public List<Flights> getAll() {String query = "SELECT * FROM Flights";
         try {
             PreparedStatement statement = this.connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
@@ -96,4 +105,7 @@ public class FlightsDaoImplementation extends SQLConnection implements FlightsDA
     public List<Flights> getByAirline(String nameOfAirline) {
         return null;
     }
+
+
+
 }
