@@ -11,11 +11,15 @@ public class SQLConnection {
     SQLConnection(){
 
         try{
-            FileReader reader = new FileReader("db.properties");
-
+            FileReader reader = new FileReader("conn.properties");
             Properties p = new Properties();
+
             p.load(reader);
-            this.connection = DriverManager.getConnection(p.getProperty("link"), p.getProperty("user"), p.getProperty("password"));
+            String url = p.getProperty("db.link");
+            String username = p.getProperty("db.user");
+            String password = p.getProperty("db.password");
+
+            this.connection = DriverManager.getConnection(url, username, password);
         }catch (Exception exception){
             System.out.println("Connection with SQL failed.");
         }

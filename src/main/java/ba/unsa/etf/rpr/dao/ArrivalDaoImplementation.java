@@ -11,6 +11,10 @@ import java.util.Date;
 import java.util.List;
 
 public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDao{
+    public ArrivalDaoImplementation() {
+
+    }
+
     /**
      * @param cityOfDeparture
      * @return
@@ -29,7 +33,7 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
                 arrival.setArrivalId(rs.getInt("id"));
                 arrival.setCountry(rs.getString("country"));
                 arrival.setCity(rs.getString("city"));
-                arrival.setDateOfArrival(rs.getDate("date"));
+                arrival.setDateOfArrival(rs.getDate("date_of_arrival"));
 
                 arrivals.add(arrival);
             }
@@ -58,7 +62,7 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
                 arrival.setArrivalId(rs.getInt("id"));
                 arrival.setCountry(rs.getString("country"));
                 arrival.setCity(rs.getString("city"));
-                arrival.setDateOfArrival(rs.getDate("date"));
+                arrival.setDateOfArrival(rs.getDate("date_of_arrival"));
 
                 arrivals.add(arrival);
             }
@@ -75,7 +79,7 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
      */
     @Override
     public List<Arrival> getByDate(Date dateOfDeparture) {
-        String query = "SELECT * FROM Arrival WHERE date = ?";
+        String query = "SELECT * FROM Arrival WHERE date_of_arrival = ?";
         try {
             PreparedStatement statement = this.connection.prepareStatement(query);
             statement.setDate(1, (java.sql.Date) dateOfDeparture);
@@ -87,7 +91,7 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
                 arrival.setArrivalId(rs.getInt("id"));
                 arrival.setCountry(rs.getString("country"));
                 arrival.setCity(rs.getString("city"));
-                arrival.setDateOfArrival(rs.getDate("date"));
+                arrival.setDateOfArrival(rs.getDate("date_of_arrival"));
 
                 arrivals.add(arrival);
             }
@@ -104,7 +108,7 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
      */
     @Override
     public Arrival update(Arrival item) {
-        String insert = "UPDATE Arrival SET country = ?, city = ?, date = ? WHERE id = ?";
+        String insert = "UPDATE Arrival SET country = ?, city = ?, date_of_arrival = ? WHERE id = ?";
         try {
             PreparedStatement statement = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
 
@@ -137,7 +141,7 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
                 arrival.setArrivalId(rs.getInt("id"));
                 arrival.setCountry(rs.getString("country"));
                 arrival.setCity(rs.getString("city"));
-                arrival.setDateOfArrival(rs.getDate("date"));
+                arrival.setDateOfArrival(rs.getDate("date_of_arrival"));
 
                 rs.close();
                 return arrival;
@@ -154,14 +158,13 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
      */
     @Override
     public Arrival add(Arrival item) {
-        String insert = "INSERT INTO Arrival(country, city, date) VALUES (?, ?, ?)";
+        String insert = "INSERT INTO Arrival(country, city, date_of_arrival) VALUES (?, ?, '2022-12-11')";
 
         try {
             PreparedStatement statement = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, item.getCountry());
             statement.setString(2, item.getCity());
-            statement.setDate(3, (java.sql.Date) item.getDateOfArrival());
-
+            //statement.setDate(3, (java.sql.Date)item.getDateOfArrival());
             statement.executeUpdate();
 
             ResultSet rs = statement.getGeneratedKeys();
@@ -170,9 +173,9 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
             item.setArrivalId(rs.getInt(1));
             return item;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
-
+        return null;
     }
 
     /**
@@ -207,7 +210,8 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
                 arrival.setArrivalId(rs.getInt("id"));
                 arrival.setCountry(rs.getString("country"));
                 arrival.setCity(rs.getString("city"));
-                arrival.setDateOfArrival(rs.getDate("date"));
+
+                arrival.setDateOfArrival(rs.getDate("date_of_arrival"));
 
                 arrivals.add(arrival);
             }

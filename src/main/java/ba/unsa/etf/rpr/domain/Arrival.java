@@ -8,7 +8,7 @@ public class Arrival {
     private String city, country;
     private Date dateOfArrival;
 
-    public Arrival(int arrivalId, String city, String country, Date dateOfArrival, Departure departure) {
+    public Arrival(int arrivalId, String city, String country, Date dateOfArrival) {
         this.arrivalId = arrivalId;
         this.city = city;
         this.country = country;
@@ -60,6 +60,6 @@ public class Arrival {
 
     @Override
     public int hashCode() {
-        return Objects.hash(arrivalId, city, country);
+        return Objects.hash(arrivalId, city, country, dateOfArrival);
     }
 }
