@@ -8,9 +8,8 @@ public class Flights {
     private String nameOfAirline;
     private int maxNumberOfPassengers, maxNumberOfBusinessClass, priceEconomyClass, priceBusinessClass;
     private Departure destination;
-    private Date dateOfDeparture;
 
-    public Flights(int id, String nameOfAirline, int maxNumberOfPassengers, int maxNumberOfBusinessClass, int priceEconomyClass, int priceBusinessClass, Departure destination, Date dateOfDeparture) {
+    public Flights(int id, String nameOfAirline, int maxNumberOfPassengers, int maxNumberOfBusinessClass, int priceEconomyClass, int priceBusinessClass, Departure destination) {
         this.id = id;
         this.nameOfAirline = nameOfAirline;
         this.maxNumberOfPassengers = maxNumberOfPassengers;
@@ -18,7 +17,6 @@ public class Flights {
         this.priceEconomyClass = priceEconomyClass;
         this.priceBusinessClass = priceBusinessClass;
         this.destination = destination;
-        this.dateOfDeparture = dateOfDeparture;
     }
 
     public int getId() {
@@ -51,14 +49,6 @@ public class Flights {
 
     public void setDestination(Departure destination) {
         this.destination = destination;
-    }
-
-    public Date getDateOfDeparture() {
-        return dateOfDeparture;
-    }
-
-    public void setDateOfDeparture(Date dateOfDeparture) {
-        this.dateOfDeparture = dateOfDeparture;
     }
 
     public Flights() {
@@ -98,6 +88,6 @@ public class Flights {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameOfAirline, maxNumberOfPassengers, maxNumberOfBusinessClass, priceEconomyClass, priceBusinessClass, destination, dateOfDeparture);
+        return Objects.hash(id, nameOfAirline, maxNumberOfPassengers, maxNumberOfBusinessClass, priceEconomyClass, priceBusinessClass, destination);
     }
 }

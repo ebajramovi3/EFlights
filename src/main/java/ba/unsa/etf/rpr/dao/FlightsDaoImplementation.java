@@ -39,13 +39,12 @@ public class FlightsDaoImplementation extends SQLConnection implements FlightsDA
                 Flights flight = new Flights();
 
                 flight.setId(rs.getInt("id"));
-                flight.setNameOfAirline(rs.getString("Airline"));
-                flight.setMaxNumberOfPassengers(rs.getInt("max"));
-                flight.setMaxNumberOfBusinessClass(rs.getInt("max"));
-                flight.setPriceBusinessClass(rs.getInt("price"));
-                flight.setPriceEconomyClass(rs.getInt("price"));
+                flight.setNameOfAirline(rs.getString("airline_name"));
+                flight.setMaxNumberOfPassengers(rs.getInt("max_passengers"));
+                flight.setMaxNumberOfBusinessClass(rs.getInt("max_business_class"));
+                flight.setPriceBusinessClass(rs.getInt("price_business"));
+                flight.setPriceEconomyClass(rs.getInt("price_economy"));
                 flight.setDestination(new DepartureDaoImplementation().getById(rs.getInt("departureId")));
-                flight.setDateOfDeparture(rs.getDate("date"));
 
                 rs.close();
                 return flight;
@@ -97,13 +96,12 @@ public class FlightsDaoImplementation extends SQLConnection implements FlightsDA
                 Flights flight = new Flights();
 
                 flight.setId(rs.getInt("id"));
-                flight.setNameOfAirline(rs.getString("Airline"));
-                flight.setMaxNumberOfPassengers(rs.getInt("max"));
-                flight.setMaxNumberOfBusinessClass(rs.getInt("max"));
-                flight.setPriceBusinessClass(rs.getInt("price"));
-                flight.setPriceEconomyClass(rs.getInt("price"));
+                flight.setNameOfAirline(rs.getString("airline_name"));
+                flight.setMaxNumberOfPassengers(rs.getInt("max_passengers"));
+                flight.setMaxNumberOfBusinessClass(rs.getInt("max_business_class"));
+                flight.setPriceBusinessClass(rs.getInt("price_business"));
+                flight.setPriceEconomyClass(rs.getInt("price_economy"));
                 flight.setDestination(new DepartureDaoImplementation().getById(rs.getInt("departureId")));
-                flight.setDateOfDeparture(rs.getDate("date"));
 
                 flights.add(flight);
             }
@@ -131,13 +129,12 @@ public class FlightsDaoImplementation extends SQLConnection implements FlightsDA
                 Flights flight = new Flights();
 
                 flight.setId(rs.getInt("id"));
-                flight.setNameOfAirline(rs.getString("Airline"));
-                flight.setMaxNumberOfPassengers(rs.getInt("max"));
-                flight.setMaxNumberOfBusinessClass(rs.getInt("max"));
-                flight.setPriceBusinessClass(rs.getInt("price"));
-                flight.setPriceEconomyClass(rs.getInt("price"));
+                flight.setNameOfAirline(rs.getString("airline_name"));
+                flight.setMaxNumberOfPassengers(rs.getInt("max_passengers"));
+                flight.setMaxNumberOfBusinessClass(rs.getInt("max_business_class"));
+                flight.setPriceBusinessClass(rs.getInt("price_business"));
+                flight.setPriceEconomyClass(rs.getInt("price_economy"));
                 flight.setDestination(new DepartureDaoImplementation().getById(rs.getInt("departureId")));
-                flight.setDateOfDeparture(rs.getDate("date"));
 
                 flights.add(flight);
             }
