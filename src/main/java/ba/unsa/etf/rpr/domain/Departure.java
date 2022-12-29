@@ -16,7 +16,7 @@ public class Departure {
         this.departureId = departureId;
         this.city = city;
         this.country = country;
-        this.dateOfDeparture = dateOfDeparture;
+        this.dateOfDeparture = new Date(dateOfDeparture.getYear() - 1900, dateOfDeparture.getMonth() - 1, dateOfDeparture.getDay() + 4);
         this.arrival = arrival;
     }
 
