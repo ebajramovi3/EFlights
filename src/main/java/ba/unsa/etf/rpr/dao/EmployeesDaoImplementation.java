@@ -6,6 +6,7 @@ import ba.unsa.etf.rpr.domain.Employees;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,15 @@ public class EmployeesDaoImplementation extends SQLConnection implements Employe
      */
     @Override
     public void delete(Integer id) {
+        String delete = "DELETE FROM Employees WHERE id = ?";
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(delete, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, id);
 
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
