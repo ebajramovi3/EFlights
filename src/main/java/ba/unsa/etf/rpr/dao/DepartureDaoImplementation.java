@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 
 public class DepartureDaoImplementation extends SQLConnection implements DepartureDAO{
+    public DepartureDaoImplementation() {
+    }
 
     /**
      * @param item
@@ -72,21 +74,22 @@ public class DepartureDaoImplementation extends SQLConnection implements Departu
      */
     @Override
     public Departure add(Departure item) {
-        String add = "INSERT INTO Departure(country, city, date, arrivalId) VALUES (?, ?, ?, ?)";
+        String add = "INSERT INTO Departure(id, country, city, date, arrivalId) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement statement = this.connection.prepareStatement(add, Statement.RETURN_GENERATED_KEYS);
 
-            statement.setString(1, item.getCountry());
-            statement.setString(2, item.getCity());
-            statement.setDate(3, (java.sql.Date) item.getDateOfDeparture());
-            statement.setInt(4, item.getArrival().getArrivalId());
+            statement.setInt(1, item.getDepartureId());
+            statement.setString(2, item.getCountry());
+            statement.setString(3, item.getCity());
+            java.sql.Date sqlDate = new java.sql.Date(item.getDateOfDeparture().getYear(), item.getDateOfDeparture().getMonth(), item.getDateOfDeparture().getDay() + 1);
+            statement.setString(4, sqlDate.toString());
+            statement.setInt(5, item.getArrival().getArrivalId());
 
             statement.executeUpdate();
 
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
 
-            item.setDepartureId(rs.getInt(1));
             return item;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -221,7 +224,8 @@ public class DepartureDaoImplementation extends SQLConnection implements Departu
                 departure.setDepartureId(rs.getInt("id"));
                 departure.setCountry(rs.getString("country"));
                 departure.setCity("city");
-                departure.setDateOfDeparture(rs.getDate("date"));
+                java.sql.Date date = new java.sql.Date(dateOfDeparture.getYear(), dateOfDeparture.getMonth(), dateOfDeparture.getDay() + 1);
+                statement.setDate(1, date);
                 departure.setArrival(new ArrivalDaoImplementation().getById(rs.getInt("arrivalId")));
 
                 departures.add(departure);
