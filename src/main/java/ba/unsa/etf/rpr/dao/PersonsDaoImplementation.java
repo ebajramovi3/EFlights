@@ -1,15 +1,17 @@
 package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Departure;
+import ba.unsa.etf.rpr.domain.Flights;
 import ba.unsa.etf.rpr.domain.Persons;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
-public class PersonsDaoImplementation extends SQLConnection implements PersonsDAO{
+public class PersonsDaoImplementation extends SQLConnection implements DAO<Persons, String> {
     /**
      * @param item
      * @return
@@ -118,33 +120,30 @@ public class PersonsDaoImplementation extends SQLConnection implements PersonsDA
      */
     @Override
     public List<Persons> getAll() {
-        return null;
+        String query = "SELECT * FROM Persons";
+        try{
+            List<Persons> persons = new ArrayList<>();
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                Persons person = new Persons();
+
+                person.setPassportId(rs.getString("passportId"));
+                person.setFirstName(rs.getString("first_name"));
+                person.setLastName(rs.getString("last_name"));
+                person.setDateOfBirth(rs.getDate("date_of_birth"));
+                person.setCitizenship(rs.getString("citizenship"));
+                person.setCheckIn(rs.getBoolean("check_in"));
+                person.setFlight(new FlightsDaoImplementation().getById(rs.getInt("flightId")));
+                person.setBusinessClass(rs.getBoolean("business_class"));
+
+                persons.add(person);
+            }
+            rs.close();
+            return persons;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    /**
-     * @param firstName
-     * @return
-     */
-    @Override
-    public List<Persons> getByFirstName(String firstName) {
-        return null;
-    }
-
-    /**
-     * @param lastName
-     * @return
-     */
-    @Override
-    public List<Persons> getByLastName(String lastName) {
-        return null;
-    }
-
-    /**
-     * @param citizenship
-     * @return
-     */
-    @Override
-    public List<Persons> getByCitizenship(String citizenship) {
-        return null;
-    }
 }
