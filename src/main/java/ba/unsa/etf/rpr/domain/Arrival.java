@@ -12,7 +12,7 @@ public class Arrival {
         this.arrivalId = arrivalId;
         this.city = city;
         this.country = country;
-        this.dateOfArrival = dateOfArrival;
+        this.dateOfArrival = new Date(dateOfArrival.getYear() - 1900, dateOfArrival.getMonth() - 1, dateOfArrival.getDay() + 4);
     }
 
     public Arrival() {
