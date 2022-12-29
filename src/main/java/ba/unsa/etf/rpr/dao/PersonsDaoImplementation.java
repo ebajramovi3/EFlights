@@ -72,7 +72,29 @@ public class PersonsDaoImplementation extends SQLConnection implements PersonsDA
      */
     @Override
     public Persons add(Persons item) {
-        return null;
+        String add = "INSERT INTO Persons(passportId, first_name, last_name, date_of_birth, citizenship, check_in, flight_id, business_class) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(add, Statement.RETURN_GENERATED_KEYS);
+
+            statement.setString(1, item.getPassportId());
+            statement.setString(2, item.getFirstName());
+            statement.setString(3, item.getLastName());
+            java.sql.Date sqlDate = new java.sql.Date(item.getDateOfBirth().getYear(), item.getDateOfBirth().getMonth(), item.getDateOfBirth().getDay() + 1);
+            statement.setString(4, sqlDate.toString());
+            statement.setString(5, item.getCitizenship());
+            statement.setBoolean(6, item.isCheckIn());
+            statement.setInt(7, item.getFlight().getId());
+            statement.setBoolean(8, item.isBusinessClass());
+
+            statement.executeUpdate();
+
+            ResultSet rs = statement.getGeneratedKeys();
+            rs.next();
+
+            return item;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
