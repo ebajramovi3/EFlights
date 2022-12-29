@@ -26,6 +26,28 @@ public class EmployeesDaoImplementation extends SQLConnection implements Employe
      */
     @Override
     public Employees getById(Integer id) {
+        String query = "SELECT * FROM Departure";
+        try{
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            statement.setInt(1, id);
+
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                Employees employee = new Employees();
+
+                employee.setId(rs.getInt("id"));
+                employee.setFirstName(rs.getString("first_name"));
+                employee.setLastName(rs.getString("last_name"));
+                employee.setUsername(rs.getString("username"));
+                employee.setPassword(rs.getString("password"));
+
+                rs.close();
+                return employee;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
