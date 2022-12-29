@@ -23,6 +23,10 @@ public class Persons {
         this.flight = flight;
     }
 
+    public Persons() {
+
+    }
+
     public String getPassportId() {
         return passportId;
     }
