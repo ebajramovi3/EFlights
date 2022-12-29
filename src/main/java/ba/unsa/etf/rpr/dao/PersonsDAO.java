@@ -4,10 +4,10 @@ import ba.unsa.etf.rpr.domain.Persons;
 
 import java.util.List;
 
-public interface PersonsDAO<T> extends DAO<Persons, String> {
-    List<Persons> searchByFirstName(String firstName);
+public interface PersonsDAO extends DAO<Persons, String> {
+    List<Persons> getByFirstName(String firstName);
 
-    List<Persons> searchByLastName(String lastName);
+    List<Persons> getByLastName(String lastName);
 
-    List<Persons> searchByCitizenship(String citizenship);
+    List<Persons> getByCitizenship(String citizenship);
 }

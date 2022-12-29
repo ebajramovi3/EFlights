@@ -33,7 +33,8 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
                 arrival.setArrivalId(rs.getInt("id"));
                 arrival.setCountry(rs.getString("country"));
                 arrival.setCity(rs.getString("city"));
-                arrival.setDateOfArrival(rs.getDate("date_of_arrival"));
+
+                //arrival.setDateOfArrival(rs.getString("date_of_arrival"));
 
                 arrivals.add(arrival);
             }
@@ -82,7 +83,7 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
         String query = "SELECT * FROM Arrival WHERE date_of_arrival = ?";
         try {
             PreparedStatement statement = this.connection.prepareStatement(query);
-            statement.setDate(1, (java.sql.Date) dateOfDeparture);
+           // statement.setDate(1, (java.sql.Date) dateOfDeparture);
             ResultSet rs = statement.executeQuery();
 
             List<Arrival> arrivals = new ArrayList<>();
@@ -114,7 +115,8 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
 
             statement.setString(1, item.getCountry());
             statement.setString(2, item.getCity());
-            statement.setDate(3, (java.sql.Date) item.getDateOfArrival());
+            java.sql.Date sqlDate = new java.sql.Date(item.getDateOfArrival().getYear() - 1900, item.getDateOfArrival().getMonth() - 1, item.getDateOfArrival().getDay() + 4);
+            statement.setString(3, sqlDate.toString());
             statement.setInt(4, item.getArrivalId());
 
             statement.executeUpdate();
@@ -158,13 +160,14 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
      */
     @Override
     public Arrival add(Arrival item) {
-        String insert = "INSERT INTO Arrival(country, city, date_of_arrival) VALUES (?, ?, '2022-12-11')";
+        String insert = "INSERT INTO Arrival(country, city, date_of_arrival) VALUES (?, ?, ?)";
 
         try {
             PreparedStatement statement = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, item.getCountry());
             statement.setString(2, item.getCity());
-            //statement.setDate(3, (java.sql.Date)item.getDateOfArrival());
+            java.sql.Date sqlDate = new java.sql.Date(item.getDateOfArrival().getYear() - 1900, item.getDateOfArrival().getMonth() - 1, item.getDateOfArrival().getDay() + 4);
+            statement.setString(3, sqlDate.toString());
             statement.executeUpdate();
 
             ResultSet rs = statement.getGeneratedKeys();
