@@ -79,23 +79,23 @@ public class FlightsDaoImplementation extends SQLConnection implements FlightsDA
      */
     @Override
     public Flights add(Flights item) {
-        String add = "INSERT INTO Flights(airline_name, departureId, max_passengers, max_business_class, price_economy, price_business) VALUES (?, ?, ?, ?, ?, ?)";
+        String add = "INSERT INTO Flights(id, airline_name, departureId, max_passengers, max_business_class, price_economy, price_business) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement statement = this.connection.prepareStatement(add, Statement.RETURN_GENERATED_KEYS);
 
-            statement.setString(1, item.getNameOfAirline());
-            statement.setInt(2, item.getDestination().getDepartureId());
-            statement.setInt(3, item.getMaxNumberOfPassengers());
-            statement.setInt(4, item.getMaxNumberOfBusinessClass());
-            statement.setInt(5, item.getPriceEconomyClass());
-            statement.setInt(6, item.getPriceBusinessClass());
+            statement.setInt(1, item.getId());
+            statement.setString(2, item.getNameOfAirline());
+            statement.setInt(3, item.getDestination().getDepartureId());
+            statement.setInt(4, item.getMaxNumberOfPassengers());
+            statement.setInt(5, item.getMaxNumberOfBusinessClass());
+            statement.setInt(6, item.getPriceEconomyClass());
+            statement.setInt(7, item.getPriceBusinessClass());
 
             statement.executeUpdate();
 
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
 
-            item.setId(rs.getInt(1));
             return item;
         } catch (SQLException e) {
             throw new RuntimeException(e);
