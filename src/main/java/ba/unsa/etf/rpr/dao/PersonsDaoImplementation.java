@@ -102,7 +102,15 @@ public class PersonsDaoImplementation extends SQLConnection implements PersonsDA
      */
     @Override
     public void delete(String id) {
+        String delete = "DELETE FROM Persons WHERE id = ?";
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(delete, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, id);
 
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
