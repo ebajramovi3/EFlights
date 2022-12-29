@@ -28,7 +28,8 @@ public class DepartureDaoImplementation extends SQLConnection implements Departu
 
             statement.setString(1, item.getCountry());
             statement.setString(2, item.getCity());
-            statement.setDate(3, (java.sql.Date) item.getDateOfDeparture());
+            java.sql.Date sqlDate = new java.sql.Date(item.getDateOfDeparture().getYear(), item.getDateOfDeparture().getMonth(), item.getDateOfDeparture().getDay() + 1);
+            statement.setDate(3, sqlDate);
             statement.setInt(4, item.getArrival().getArrivalId());
             statement.setInt(5, item.getDepartureId());
 
