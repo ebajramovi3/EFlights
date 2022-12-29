@@ -18,6 +18,7 @@ public class Arrival {
     public Arrival() {
     }
 
+
     public int getArrivalId() {
         return arrivalId;
     }
