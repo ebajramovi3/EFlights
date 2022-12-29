@@ -141,7 +141,28 @@ public class EmployeesDaoImplementation extends SQLConnection implements Employe
      * @return
      */
     @Override
-    public String getByUsername(String username) {
+    public Employees getByUsername(String username) {
+        String query = "SELECT * FROM Employees WHERE username = ?";
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            statement.setString(1, username);
+
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                Employees employee = new Employees();
+
+                employee.setId(rs.getInt("id"));
+                employee.setFirstName(rs.getString("first_name"));
+                employee.setLastName(rs.getString("last_name"));
+                employee.setUsername(rs.getString("username"));
+                employee.setPassword(rs.getString("password"));
+
+                rs.close();
+                return employee;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 }
