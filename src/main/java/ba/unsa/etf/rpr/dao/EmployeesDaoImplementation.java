@@ -35,7 +35,25 @@ public class EmployeesDaoImplementation extends SQLConnection implements Employe
      */
     @Override
     public Employees add(Employees item) {
-        return null;
+        String add = "INSERT INTO Employees(id, first_name, last_name, username, password) VALUES (?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(add, Statement.RETURN_GENERATED_KEYS);
+
+            statement.setInt(1, item.getId());
+            statement.setString(2, item.getFirstName());
+            statement.setString(3, item.getLastName());
+            statement.setString(4, item.getUsername());
+            statement.setString(5, item.getPassword());
+
+            statement.executeUpdate();
+
+            ResultSet rs = statement.getGeneratedKeys();
+            rs.next();
+
+            return item;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
