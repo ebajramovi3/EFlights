@@ -5,17 +5,15 @@ import java.util.Objects;
 
 public class Persons {
     private String passportId, firstName, lastName;
-    private Flights destination;
     private String citizenship;
     private Date dateOfBirth;
     private boolean checkIn, businessClass;
     private Flights flight;
 
-    public Persons(String passportId, String firstName, String lastName, Flights destination, String citizenship, Date dateOfBirth, boolean checkIn, boolean businessClass, Flights flight) {
+    public Persons(String passportId, String firstName, String lastName, String citizenship, Date dateOfBirth, boolean checkIn, boolean businessClass, Flights flight) {
         this.passportId = passportId;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.destination = destination;
         this.citizenship = citizenship;
         this.dateOfBirth = dateOfBirth;
         this.checkIn = checkIn;
@@ -49,14 +47,6 @@ public class Persons {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public Flights getDestination() {
-        return destination;
-    }
-
-    public void setDestination(Flights destination) {
-        this.destination = destination;
     }
 
     public String getCitizenship() {
