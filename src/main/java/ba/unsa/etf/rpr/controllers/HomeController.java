@@ -37,6 +37,17 @@ public class HomeController {
     }
 
     public void DepartureButtonAction(ActionEvent actionEvent) {
+        Stage stage = new Stage();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Departures.fxml"));
+            DepartureController controller = new DepartureController();
+            loader.setController(controller);
+            stage.setTitle("Departures");
+            stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void FlightButtonAction(ActionEvent actionEvent) {
@@ -48,7 +59,7 @@ public class HomeController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CheckIn.fxml"));
             CheckInController controller = new CheckInController();
             loader.setController(controller);
-            stage.setTitle("Log In");
+            stage.setTitle("Check In");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.show();
         } catch (IOException e) {
