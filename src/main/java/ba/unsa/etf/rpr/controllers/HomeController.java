@@ -1,11 +1,9 @@
-package ba.unsa.etf.rpr.conrollers;
+package ba.unsa.etf.rpr.controllers;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -16,7 +14,7 @@ import java.io.IOException;
 public class HomeController {
     public Hyperlink LogInId;
     public Button ArrivalId;
-    public Button DepartireId;
+    public Button DepartureId;
     public Button SearchFlightsId;
     public Button CheckInId;
 
@@ -25,7 +23,17 @@ public class HomeController {
 
 
     public void ArrivalButtonAction(ActionEvent actionEvent) {
-
+        Stage stage = new Stage();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Arrivals.fxml"));
+            ArrivalsController controller = new ArrivalsController();
+            loader.setController(controller);
+            stage.setTitle("Arrivals");
+            stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void DepartureButtonAction(ActionEvent actionEvent) {
@@ -35,6 +43,17 @@ public class HomeController {
     }
 
     public void CheckinButtonAction(ActionEvent actionEvent) {
+        Stage stage = new Stage();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CheckIn.fxml"));
+            CheckInController controller = new CheckInController();
+            loader.setController(controller);
+            stage.setTitle("Log In");
+            stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void LogInAction(ActionEvent actionEvent) {
