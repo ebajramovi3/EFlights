@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.conrollers.HomeController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
         <menus>
@@ -37,16 +47,16 @@
           <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
         </rowConstraints>
          <children>
-            <Hyperlink fx:id="LogInId" alignment="TOP_LEFT" prefHeight="38.0" prefWidth="390.0" text="Log in" textOverrun="CLIP" underline="true" GridPane.rowIndex="2">
+            <Hyperlink fx:id="LogInId" alignment="TOP_LEFT" onAction="#LogInAction" pickOnBounds="false" text="Log in" textOverrun="CLIP" underline="true" GridPane.rowIndex="2">
                <cursor>
-                  <Cursor fx:constant="OPEN_HAND" />
+                  <Cursor fx:constant="DEFAULT" />
                </cursor>
                <GridPane.margin>
-                  <Insets left="40.0" right="5.0" />
+                  <Insets bottom="15.0" left="40.0" right="5.0" />
                </GridPane.margin></Hyperlink>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <Button fx:id="ArrivalId" mnemonicParsing="false" prefWidth="220.0" text="Arrival" VBox.vgrow="NEVER">
+                  <Button fx:id="ArrivalId" mnemonicParsing="false" onAction="#ArrivalButtonAction" prefWidth="220.0" text="Arrival" VBox.vgrow="NEVER">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -54,23 +64,31 @@
                         <Insets bottom="20.0" left="5.0" right="15.0" top="20.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="DepartireId" mnemonicParsing="false" prefWidth="220.0" text="Departure">
+                  <Button fx:id="DepartireId" mnemonicParsing="false" onAction="#DepartureButtonAction" prefWidth="220.0" text="Departure">
                      <VBox.margin>
                         <Insets bottom="20.0" left="5.0" right="15.0" top="20.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="SearchFlightsId" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" text="Find flight">
+                  <Button fx:id="SearchFlightsId" alignment="CENTER" mnemonicParsing="false" onAction="#FlightButtonAction" prefHeight="25.0" prefWidth="220.0" text="Find flight">
                      <VBox.margin>
                         <Insets bottom="20.0" left="5.0" right="15.0" top="20.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="CheckInId" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" text="Check-in">
+                  <Button fx:id="CheckInId" mnemonicParsing="false" onAction="#CheckinButtonAction" prefHeight="25.0" prefWidth="220.0" text="Check-in">
                      <VBox.margin>
                         <Insets bottom="20.0" left="5.0" right="15.0" top="20.0" />
                      </VBox.margin>
                   </Button>
                </children>
             </VBox>
+            <ImageView fitHeight="157.0" fitWidth="136.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="50.0" left="130.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@world.png" />
+               </image>
+            </ImageView>
          </children>
       </GridPane>
    </children>
