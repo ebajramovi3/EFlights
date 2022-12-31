@@ -51,6 +51,17 @@ public class HomeController {
     }
 
     public void FlightButtonAction(ActionEvent actionEvent) {
+        Stage stage = new Stage();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SearchFlights.fxml"));
+            SearchFlightsController controller = new SearchFlightsController();
+            loader.setController(controller);
+            stage.setTitle("Search");
+            stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void CheckinButtonAction(ActionEvent actionEvent) {
