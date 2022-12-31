@@ -99,6 +99,6 @@ public class Persons {
 
     @Override
     public int hashCode() {
-        return Objects.hash(passportId, firstName, lastName, destination, citizenship, dateOfBirth, checkIn, businessClass, flight);
+        return Objects.hash(passportId, firstName, lastName, citizenship, dateOfBirth, checkIn, businessClass, flight);
     }
 }
