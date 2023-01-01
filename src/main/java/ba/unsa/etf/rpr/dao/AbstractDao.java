@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.sql.*;
 import java.util.*;
 
-public abstract class AbstractDao<T extends Idable> {
+public abstract class AbstractDao<T extends Idable> implements DAO<T>{
     private static Connection connection = null;
     private String tableName;
 

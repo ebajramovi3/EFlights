@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Departure;
 import ba.unsa.etf.rpr.domain.Employees;
+import ba.unsa.etf.rpr.exceptions.FlightsException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,131 +10,52 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class EmployeesDaoImplementation extends SQLConnection implements EmployeesDAO{
+public class EmployeesDaoImplementation extends AbstractDao<Employees> implements EmployeesDAO{
+
+    public EmployeesDaoImplementation() {
+        super("Employees");
+    }
+
     /**
-     * @param item
+     * @param rs
      * @return
+     * @throws FlightsException
      */
     @Override
-    public Employees update(Employees item) {
-        String insert = "UPDATE Employees SET first_name = ?, last_name = ?, username = ?, password = ? WHERE id = ?";
+    public Employees row2object(ResultSet rs) throws FlightsException {
         try {
-            PreparedStatement statement = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            Employees employee = new Employees();
 
-            statement.setInt(1, item.getId());
-            statement.setString(2, item.getFirstName());
-            statement.setString(3, item.getLastName());
-            statement.setString(4, item.getUsername());
-            statement.setString(5, item.getPassword());
+            employee.setId(rs.getInt("id"));
+            employee.setFirstName(rs.getString("first_name"));
+            employee.setLastName(rs.getString("last_name"));
+            employee.setUsername(rs.getString("username"));
+            employee.setPassword(rs.getString("password"));
 
-            statement.executeUpdate();
-            return item;
+            return employee;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new FlightsException(e.getMessage(), e);
         }
     }
 
     /**
-     * @param id
+     * @param object
      * @return
      */
     @Override
-    public Employees getById(Integer id) {
-        String query = "SELECT * FROM Departure";
-        try{
-            PreparedStatement statement = this.connection.prepareStatement(query);
-            statement.setInt(1, id);
+    public Map<String, Object> object2row(Employees object) {
+        Map<String, Object> item = new TreeMap<>();
 
-            ResultSet rs = statement.executeQuery();
-            if(rs.next()){
-                Employees employee = new Employees();
+        item.put("id", object.getId());
+        item.put("first_name", object.getFirstName());
+        item.put("last_name", object.getLastName());
+        item.put("username", object.getUsername());
+        item.put("password", object.getPassword());
 
-                employee.setId(rs.getInt("id"));
-                employee.setFirstName(rs.getString("first_name"));
-                employee.setLastName(rs.getString("last_name"));
-                employee.setUsername(rs.getString("username"));
-                employee.setPassword(rs.getString("password"));
-
-                rs.close();
-                return employee;
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
-
-    /**
-     * @param item
-     * @return
-     */
-    @Override
-    public Employees add(Employees item) {
-        String add = "INSERT INTO Employees(id, first_name, last_name, username, password) VALUES (?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement statement = this.connection.prepareStatement(add, Statement.RETURN_GENERATED_KEYS);
-
-            statement.setInt(1, item.getId());
-            statement.setString(2, item.getFirstName());
-            statement.setString(3, item.getLastName());
-            statement.setString(4, item.getUsername());
-            statement.setString(5, item.getPassword());
-
-            statement.executeUpdate();
-
-            ResultSet rs = statement.getGeneratedKeys();
-            rs.next();
-
-            return item;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * @param id
-     */
-    @Override
-    public void delete(Integer id) {
-        String delete = "DELETE FROM Employees WHERE id = ?";
-        try {
-            PreparedStatement statement = this.connection.prepareStatement(delete, Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, id);
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public List<Employees> getAll() {
-        String query = "SELECT * FROM Departure";
-        try{
-            List<Employees> employees = new ArrayList<>();
-            PreparedStatement statement = this.connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            while(rs.next()){
-                Employees employee = new Employees();
-
-                employee.setId(rs.getInt("id"));
-                employee.setFirstName(rs.getString("first_name"));
-                employee.setLastName(rs.getString("last_name"));
-                employee.setUsername(rs.getString("username"));
-                employee.setPassword(rs.getString("password"));
-
-               employees.add(employee);
-            }
-            rs.close();
-            return employees;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return item;
     }
 
     /**
@@ -141,28 +63,7 @@ public class EmployeesDaoImplementation extends SQLConnection implements Employe
      * @return
      */
     @Override
-    public Employees getByUsername(String username) {
-        String query = "SELECT * FROM Employees WHERE username = ?";
-        try {
-            PreparedStatement statement = this.connection.prepareStatement(query);
-            statement.setString(1, username);
-
-            ResultSet rs = statement.executeQuery();
-            if(rs.next()){
-                Employees employee = new Employees();
-
-                employee.setId(rs.getInt("id"));
-                employee.setFirstName(rs.getString("first_name"));
-                employee.setLastName(rs.getString("last_name"));
-                employee.setUsername(rs.getString("username"));
-                employee.setPassword(rs.getString("password"));
-
-                rs.close();
-                return employee;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
+    public Employees getByUsername(String username) throws FlightsException{
+        return executeQueryUnique("SELECT * FROM Employees WHERE Username = ?", new Object[]{username});
     }
 }

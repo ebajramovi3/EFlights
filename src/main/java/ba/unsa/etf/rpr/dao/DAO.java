@@ -1,16 +1,18 @@
 package ba.unsa.etf.rpr.dao;
 
+import ba.unsa.etf.rpr.exceptions.FlightsException;
+
 import java.util.List;
 
-public interface DAO<T, S> {
-    public T update(T item);
+public interface DAO<T> {
+    public T update(T item) throws FlightsException;
 
-    public T getById(S id);
+    public T getById(int id) throws FlightsException;;
 
-    public T add(T item);
+    public T add(T item) throws FlightsException;;
 
-    public void delete(S id);
+    public void delete(int id) throws FlightsException;;
 
-    public List<T> getAll();
+    public List<T> getAll() throws FlightsException;;
 }
 

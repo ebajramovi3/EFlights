@@ -1,18 +1,52 @@
 package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Arrival;
+import ba.unsa.etf.rpr.exceptions.FlightsException;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
-public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDao{
+public class ArrivalDaoImplementation extends AbstractDao<Arrival> implements ArrivalDAO {
+
     public ArrivalDaoImplementation() {
+        super("Arrival");
+    }
 
+    /**
+     * @param rs
+     * @return
+     * @throws FlightsException
+     */
+    @Override
+    public Arrival row2object(ResultSet rs) throws FlightsException {
+        try {
+            Arrival arrival = new Arrival();
+            arrival.setId(rs.getInt("id"));
+            arrival.setCountry(rs.getString("country"));
+            arrival.setCity(rs.getString("city"));
+            arrival.setDateOfArrival(rs.getDate("date_of_arrival"));
+
+            return arrival;
+        }catch (Exception exception){
+            throw new FlightsException(exception.getMessage(), exception);
+        }
+    }
+
+    /**
+     * @param object
+     * @return
+     */
+    @Override
+    public Map<String, Object> object2row(Arrival object) {
+        Map<String, Object> item = new TreeMap<>();
+
+        item.put("id", object.getId());
+        item.put("country", object.getCountry());
+        item.put("city", object.getCity());
+        java.sql.Date sqlDate = new java.sql.Date(object.getDateOfArrival().getYear(), object.getDateOfArrival().getMonth(), object.getDateOfArrival().getDay() + 1);
+        item.put("date", sqlDate.toString());
+
+        return item;
     }
 
     /**
@@ -20,28 +54,8 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
      * @return
      */
     @Override
-    public List<Arrival> getByCity(String cityOfDeparture) {
-        String query = "SELECT * FROM Arrival WHERE city = ?";
-        try {
-            PreparedStatement statement = this.connection.prepareStatement(query);
-            statement.setString(1, cityOfDeparture);
-            ResultSet rs = statement.executeQuery();
-
-            List<Arrival> arrivals = new ArrayList<>();
-            while(rs.next()){
-                Arrival arrival = new Arrival();
-                arrival.setArrivalId(rs.getInt("id"));
-                arrival.setCountry(rs.getString("country"));
-                arrival.setCity(rs.getString("city"));
-                arrival.setDateOfArrival(rs.getDate("date_of_arrival"));
-
-                arrivals.add(arrival);
-            }
-            rs.close();
-            return arrivals;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public List<Arrival> getByCity(String cityOfDeparture) throws FlightsException{
+        return executeQuery("SELECT * FROM Arrival WHERE city = ?", new Object[]{cityOfDeparture});
     }
 
     /**
@@ -49,28 +63,8 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
      * @return
      */
     @Override
-    public List<Arrival> getByCountry(String countryOfDeparture) {
-        String query = "SELECT * FROM Arrival WHERE country = ?";
-        try {
-            PreparedStatement statement = this.connection.prepareStatement(query);
-            statement.setString(1, countryOfDeparture);
-            ResultSet rs = statement.executeQuery();
-
-            List<Arrival> arrivals = new ArrayList<>();
-            while(rs.next()){
-                Arrival arrival = new Arrival();
-                arrival.setArrivalId(rs.getInt("id"));
-                arrival.setCountry(rs.getString("country"));
-                arrival.setCity(rs.getString("city"));
-                arrival.setDateOfArrival(rs.getDate("date_of_arrival"));
-
-                arrivals.add(arrival);
-            }
-            rs.close();
-            return arrivals;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public List<Arrival> getByCountry(String countryOfDeparture) throws FlightsException{
+        return executeQuery("SELECT * FROM Arrival WHERE country = ?", new Object[]{countryOfDeparture});
     }
 
     /**
@@ -78,152 +72,7 @@ public class ArrivalDaoImplementation extends SQLConnection implements ArrivalDa
      * @return
      */
     @Override
-    public List<Arrival> getByDate(Date dateOfDeparture) {
-        String query = "SELECT * FROM Arrival WHERE date_of_arrival = ?";
-        try {
-            PreparedStatement statement = this.connection.prepareStatement(query);
-            java.sql.Date date = new java.sql.Date(dateOfDeparture.getYear(), dateOfDeparture.getMonth(), dateOfDeparture.getDay() + 1);
-            statement.setDate(1, date);
-            ResultSet rs = statement.executeQuery();
-
-            List<Arrival> arrivals = new ArrayList<>();
-            while(rs.next()){
-                Arrival arrival = new Arrival();
-                arrival.setArrivalId(rs.getInt("id"));
-                arrival.setCountry(rs.getString("country"));
-                arrival.setCity(rs.getString("city"));
-                arrival.setDateOfArrival(rs.getDate("date_of_arrival"));
-
-                arrivals.add(arrival);
-            }
-            rs.close();
-            return arrivals;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * @param item
-     * @return
-     */
-    @Override
-    public Arrival update(Arrival item) {
-        String insert = "UPDATE Arrival SET country = ?, city = ?, date_of_arrival = ? WHERE id = ?";
-        try {
-            PreparedStatement statement = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-
-            statement.setString(1, item.getCountry());
-            statement.setString(2, item.getCity());
-            java.sql.Date sqlDate = new java.sql.Date(item.getDateOfArrival().getYear(), item.getDateOfArrival().getMonth(), item.getDateOfArrival().getDay() + 1);
-            statement.setDate(3, sqlDate);
-            statement.setInt(4, item.getArrivalId());
-
-            statement.executeUpdate();
-            return item;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * @param id
-     * @return
-     */
-    @Override
-    public Arrival getById(Integer id) {
-        String query = "SELECT * FROM Arrival WHERE id = ?";
-        try {
-            PreparedStatement statement = this.connection.prepareStatement(query);
-            statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-
-            if(rs.next()){
-                Arrival arrival = new Arrival();
-                arrival.setArrivalId(rs.getInt("id"));
-                arrival.setCountry(rs.getString("country"));
-                arrival.setCity(rs.getString("city"));
-                arrival.setDateOfArrival(rs.getDate("date_of_arrival"));
-
-                rs.close();
-                return arrival;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
-
-    /**
-     * @param item
-     * @return
-     */
-    @Override
-    public Arrival add(Arrival item) {
-        String insert = "INSERT INTO Arrival(id, country, city, date_of_arrival) VALUES (?, ?, ?, ?)";
-
-        try {
-            PreparedStatement statement = this.connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-
-            statement.setInt(1, item.getArrivalId());
-            statement.setString(2, item.getCountry());
-            statement.setString(3, item.getCity());
-            java.sql.Date sqlDate = new java.sql.Date(item.getDateOfArrival().getYear(), item.getDateOfArrival().getMonth(), item.getDateOfArrival().getDay() + 1);
-            statement.setString(4, sqlDate.toString());
-            statement.executeUpdate();
-
-            ResultSet rs = statement.getGeneratedKeys();
-            rs.next();
-
-            item.setArrivalId(rs.getInt(1));
-            return item;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
-
-    /**
-     * @param id
-     */
-    @Override
-    public void delete(Integer id) {
-        String delete = "DELETE FROM Arrival WHERE id = ?";
-
-        try {
-            PreparedStatement statement = this.connection.prepareStatement(delete, Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public List<Arrival> getAll() {
-        String query = "SELECT * FROM Arrival";
-        try {
-            PreparedStatement statement = this.connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-
-            List<Arrival> arrivals = new ArrayList<>();
-            while(rs.next()){
-                Arrival arrival = new Arrival();
-                arrival.setArrivalId(rs.getInt("id"));
-                arrival.setCountry(rs.getString("country"));
-                arrival.setCity(rs.getString("city"));
-
-                arrival.setDateOfArrival(rs.getDate("date_of_arrival"));
-
-                arrivals.add(arrival);
-            }
-            rs.close();
-            return arrivals;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public List<Arrival> getByDate(Date dateOfDeparture) throws FlightsException{
+        return executeQuery("SELECT * FROM Arrival WHERE date = ?", new Object[]{dateOfDeparture});
     }
 }
