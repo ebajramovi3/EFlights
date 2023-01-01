@@ -3,14 +3,14 @@ package ba.unsa.etf.rpr.domain;
 import java.util.Date;
 import java.util.Objects;
 
-public class Persons {
-    private String passportId, firstName, lastName;
-    private String citizenship;
+public class Persons implements Idable{
+    private int passportId;
+    private String firstName, lastName, citizenship;
     private Date dateOfBirth;
     private boolean checkIn, businessClass;
     private Flights flight;
 
-    public Persons(String passportId, String firstName, String lastName, String citizenship, Date dateOfBirth, boolean checkIn, boolean businessClass, Flights flight) {
+    public Persons(int passportId, String firstName, String lastName, String citizenship, Date dateOfBirth, boolean checkIn, boolean businessClass, Flights flight) {
         this.passportId = passportId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,14 +23,6 @@ public class Persons {
 
     public Persons() {
 
-    }
-
-    public String getPassportId() {
-        return passportId;
-    }
-
-    public void setPassportId(String passportId) {
-        this.passportId = passportId;
     }
 
     public String getFirstName() {
@@ -94,11 +86,27 @@ public class Persons {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Persons persons = (Persons) o;
-        return passportId.equals(persons.passportId);
+        return passportId == persons.passportId;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(passportId, firstName, lastName, citizenship, dateOfBirth, checkIn, businessClass, flight);
+    }
+
+    /**
+     * @param id
+     */
+    @Override
+    public void setId(int id) {
+        this.passportId = id;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getId() {
+        return passportId;
     }
 }

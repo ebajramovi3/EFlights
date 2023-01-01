@@ -3,7 +3,7 @@ package ba.unsa.etf.rpr.domain;
 import java.util.Date;
 import java.util.Objects;
 
-public class Arrival {
+public class Arrival implements Idable {
     private int arrivalId;
     private String city, country;
     private Date dateOfArrival;
@@ -16,15 +16,6 @@ public class Arrival {
     }
 
     public Arrival() {
-    }
-
-
-    public int getArrivalId() {
-        return arrivalId;
-    }
-
-    public void setArrivalId(int arrivalId) {
-        this.arrivalId = arrivalId;
     }
 
     public String getCity() {
@@ -62,5 +53,21 @@ public class Arrival {
     @Override
     public int hashCode() {
         return Objects.hash(arrivalId, city, country, dateOfArrival);
+    }
+
+    /**
+     * @param id
+     */
+    @Override
+    public void setId(int id) {
+
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getId() {
+        return 0;
     }
 }

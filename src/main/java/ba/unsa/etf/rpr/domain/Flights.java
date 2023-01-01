@@ -3,7 +3,7 @@ package ba.unsa.etf.rpr.domain;
 import java.util.Date;
 import java.util.Objects;
 
-public class Flights {
+public class Flights implements Idable{
     private int id;
     private String nameOfAirline;
     private int maxNumberOfPassengers, maxNumberOfBusinessClass, priceEconomyClass, priceBusinessClass;

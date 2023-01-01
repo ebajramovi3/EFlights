@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * @author Esma Bajramović
  */
-public class Departure {
+public class Departure implements Idable{
     private int departureId;
     private String city, country;
     private Date dateOfDeparture;
@@ -23,20 +23,12 @@ public class Departure {
     public Departure() {
     }
 
-    public int getDepartureId() {
-        return departureId;
-    }
-
     public Arrival getArrival() {
         return arrival;
     }
 
     public void setArrival(Arrival arrival) {
         this.arrival = arrival;
-    }
-
-    public void setDepartureId(int departureId) {
-        this.departureId = departureId;
     }
 
     public String getCity() {
@@ -74,5 +66,21 @@ public class Departure {
     @Override
     public int hashCode() {
         return Objects.hash(departureId, city, country, dateOfDeparture, arrival);
+    }
+
+    /**
+     * @param id
+     */
+    @Override
+    public void setId(int id) {
+        this.departureId = id;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getId() {
+        return departureId;
     }
 }
