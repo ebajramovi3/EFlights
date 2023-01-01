@@ -83,6 +83,28 @@ public abstract class AbstractDao<T extends Idable> {
     public T add(T item) throws FlightsException{
         Map<String, Object> row = object2row(item);
         Map.Entry<String, String> columns = prepareInsertParts(row);
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("INSERT INTO").append(tableName);
+        builder.append(" (").append(columns.getKey()).append(") ");
+        builder.append("VALUES (").append(columns.getValue()).append(")");
+
+        try{
+            PreparedStatement statement = getConnection().prepareStatement(builder.toString(), Statement.RETURN_GENERATED_KEYS);
+            int counter = 1;
+            for (Map.Entry<String, Object> entry: row.entrySet()) {
+                statement.setObject(counter, entry.getValue());
+                counter++;
+            }
+            statement.executeUpdate();
+
+            ResultSet rs = statement.getGeneratedKeys();
+            rs.next();
+
+            return item;
+        }catch (Exception exception){
+            throw new FlightsException(exception.getMessage(), exception);
+        }
     }
 
     private Map.Entry<String, String> prepareInsertParts(Map<String, Object> row){
