@@ -5,10 +5,7 @@ import ba.unsa.etf.rpr.exceptions.FlightsException;
 
 import java.io.FileReader;
 import java.sql.*;
-import java.util.AbstractMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public abstract class AbstractDao<T extends Idable> {
     private static Connection connection = null;
@@ -129,6 +126,25 @@ public abstract class AbstractDao<T extends Idable> {
             stmt.executeUpdate();
             return item;
         }catch (SQLException e){
+            throw new FlightsException(e.getMessage(), e);
+        }
+    }
+
+    public List<T> executeQuery(String query, Object[] params) throws FlightsException{
+        try {
+            PreparedStatement stmt = getConnection().prepareStatement(query);
+            if (params != null){
+                for(int i = 1; i <= params.length; i++){
+                    stmt.setObject(i, params[i-1]);
+                }
+            }
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<T> resultList = new ArrayList<>();
+            while (rs.next()) {
+                resultList.add(row2object(rs));
+            }
+            return resultList;
+        } catch (SQLException e) {
             throw new FlightsException(e.getMessage(), e);
         }
     }
