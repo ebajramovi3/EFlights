@@ -107,6 +107,11 @@ public abstract class AbstractDao<T extends Idable> {
         }
     }
 
+    public T update(T item) throws FlightsException {
+        Map<String, Object> row = object2row(item);
+        String updateColumns = prepareUpdateParts(row);
+    }
+
     private Map.Entry<String, String> prepareInsertParts(Map<String, Object> row){
         StringBuilder columns = new StringBuilder();
         StringBuilder questions = new StringBuilder();
@@ -122,6 +127,20 @@ public abstract class AbstractDao<T extends Idable> {
             }
         }
         return new AbstractMap.SimpleEntry<>(columns.toString(), questions.toString());
+    }
+
+    private String prepareUpdateParts(Map<String, Object> row){
+        StringBuilder columns = new StringBuilder();
+
+        int counter = 0;
+        for (Map.Entry<String, Object> entry: row.entrySet()) {
+            counter++;
+            columns.append(entry.getKey()).append("= ?");
+            if (row.size() != counter) {
+                columns.append(",");
+            }
+        }
+        return columns.toString();
     }
 
 }
