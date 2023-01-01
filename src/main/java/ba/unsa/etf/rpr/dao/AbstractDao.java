@@ -149,6 +149,14 @@ public abstract class AbstractDao<T extends Idable> {
         }
     }
 
+    public T getById(int id) throws FlightsException {
+        return executeQueryUnique("SELECT * FROM "+this.tableName+" WHERE id = ?", new Object[]{id});
+    }
+
+    public List<T> getAll() throws FlightsException{
+        return executeQuery("SELECT * FROM "+ tableName, null);
+    }
+
     private Map.Entry<String, String> prepareInsertParts(Map<String, Object> row){
         StringBuilder columns = new StringBuilder();
         StringBuilder questions = new StringBuilder();
