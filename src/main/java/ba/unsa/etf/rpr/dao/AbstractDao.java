@@ -5,6 +5,7 @@ import ba.unsa.etf.rpr.exceptions.FlightsException;
 
 import java.io.FileReader;
 import java.sql.*;
+import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -77,6 +78,28 @@ public abstract class AbstractDao<T extends Idable> {
         }catch (SQLException exception){
             throw new FlightsException(exception.getMessage(), exception);
         }
+    }
+
+    public T add(T item) throws FlightsException{
+        Map<String, Object> row = object2row(item);
+        Map.Entry<String, String> columns = prepareInsertParts(row);
+    }
+
+    private Map.Entry<String, String> prepareInsertParts(Map<String, Object> row){
+        StringBuilder columns = new StringBuilder();
+        StringBuilder questions = new StringBuilder();
+
+        int counter = 0;
+        for(Map.Entry<String, Object> entry: row.entrySet()){
+            counter++;
+            columns.append(entry.getKey());
+            questions.append("?");
+            if(row.size() != counter){
+                columns.append(",");
+                questions.append(",");
+            }
+        }
+        return new AbstractMap.SimpleEntry<>(columns.toString(), questions.toString());
     }
 
 }
