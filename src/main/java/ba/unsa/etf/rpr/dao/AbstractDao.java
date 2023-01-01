@@ -180,4 +180,12 @@ public abstract class AbstractDao<T extends Idable> {
         return columns.toString();
     }
 
+    public T executeQueryUnique(String query, Object[] params) throws FlightsException{
+        List<T> result = executeQuery(query, params);
+        if (result != null && result.size() == 1){
+            return result.get(0);
+        }else{
+            throw new FlightsException("Object not found");
+        }
+    }
 }
