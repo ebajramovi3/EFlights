@@ -8,12 +8,12 @@ import ba.unsa.etf.rpr.dao.DaoFactory;
 import java.util.List;
 
 public class FlightsManager {
-    public void delete(int categoryId) throws FlightsException {
+    public void delete(int id) throws FlightsException {
         try {
-            DaoFactory.flightsDao().delete(categoryId);
+            DaoFactory.flightsDao().delete(id);
         } catch (FlightsException e) {
             if (e.getMessage().contains("FOREIGN KEY")) {
-                throw new FlightsException("Cannot delete category which is related to quotes. First delete related quotes before deleting category.");
+                throw new FlightsException("Cannot delete flight which is related to destination/departure. First delete related destination before deleting flight.");
             }
             throw e;
         }
