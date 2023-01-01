@@ -1,14 +1,15 @@
 package ba.unsa.etf.rpr.dao;
 
 import ba.unsa.etf.rpr.domain.Idable;
+import ba.unsa.etf.rpr.exceptions.FlightsException;
 
 import java.io.FileReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
-public abstract class AbstractDao<S extends Idable> {
+public abstract class AbstractDao<T extends Idable> {
     private static Connection connection = null;
     private String tableName;
 
@@ -63,5 +64,19 @@ public abstract class AbstractDao<S extends Idable> {
         }
     }
 
+    public abstract T row2object(ResultSet rs) throws FlightsException;
+
+    public abstract Map<String, Object> object2row(T object);
+
+    public void delete(int id) throws FlightsException {
+        String sql = "DELETE FROM "+tableName+" WHERE id = ?";
+        try{
+            PreparedStatement stmt = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt.setObject(1, id);
+            stmt.executeUpdate();
+        }catch (SQLException exception){
+            throw new FlightsException(exception.getMessage(), exception);
+        }
+    }
 
 }
