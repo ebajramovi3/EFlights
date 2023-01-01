@@ -1,10 +1,11 @@
-package ba.unsa.etf.rpr.conrollers;
+package ba.unsa.etf.rpr.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class LoginController {
 
@@ -16,20 +17,22 @@ public class LoginController {
     public Button CancelButton;
 
     public void CancelButtonAction(ActionEvent actionEvent) {
+        Stage stage = (Stage) UsernameId.getScene().getWindow();
+        stage.close();
     }
 
     public void okButtonAction(ActionEvent actionEvent) {
     }
 
     @FXML
-    public void initilize(){
-        UsernameId.textProperty().addListener((obs, oldValue, newValue)-> {
+    public void initialize(){
+        UsernameId.textProperty().addListener((abs, oldValue, newValue)-> {
             if (newValue.length() >= 5)
                 IncorrectUsername.setText("");
             else
                 IncorrectUsername.setText("Incorrect username");
         });
-        PasswordId.textProperty().addListener((obs, oldValue, newValue)->{
+        PasswordId.textProperty().addListener((abs, oldValue, newValue)->{
             if(newValue.length() >= 8)
                 IncorrectPassword.setText("");
             else
