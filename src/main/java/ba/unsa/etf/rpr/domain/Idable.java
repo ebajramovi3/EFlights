@@ -1,8 +1,8 @@
 package ba.unsa.etf.rpr.domain;
 
-public interface Idable<T> {
+public interface Idable {
 
-    void setId(T id);
+    void setId(int id);
 
-    T getId();
+    int getId();
 }
