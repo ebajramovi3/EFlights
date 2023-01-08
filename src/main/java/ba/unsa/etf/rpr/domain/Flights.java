@@ -5,26 +5,34 @@ import java.util.Objects;
 
 public class Flights implements Idable{
     private int id;
-    private String nameOfAirline;
-    private int maxNumberOfPassengers, maxNumberOfBusinessClass, priceEconomyClass, priceBusinessClass;
-    private Departure destination;
+    private String nameOfAirline, cityOfDeparture, cityOfArrival;
+    private Date date;
 
-    public Flights(int id, String nameOfAirline, int maxNumberOfPassengers, int maxNumberOfBusinessClass, int priceEconomyClass, int priceBusinessClass, Departure destination) {
+    /**
+     * @param id
+     */
+    @Override
+    public void setId(int id) {
         this.id = id;
-        this.nameOfAirline = nameOfAirline;
-        this.maxNumberOfPassengers = maxNumberOfPassengers;
-        this.maxNumberOfBusinessClass = maxNumberOfBusinessClass;
-        this.priceEconomyClass = priceEconomyClass;
-        this.priceBusinessClass = priceBusinessClass;
-        this.destination = destination;
     }
 
+    /**
+     * @return
+     */
+    @Override
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public Flights(int id, String nameOfAirline, String cityOfDeparture, String cityOfArrival, Date date) {
         this.id = id;
+        this.nameOfAirline = nameOfAirline;
+        this.cityOfDeparture = cityOfDeparture;
+        this.cityOfArrival = cityOfArrival;
+        this.date = date;
+    }
+
+    public Flights() {
     }
 
     public String getNameOfAirline() {
@@ -35,59 +43,27 @@ public class Flights implements Idable{
         this.nameOfAirline = nameOfAirline;
     }
 
-    public int getMaxNumberOfPassengers() {
-        return maxNumberOfPassengers;
+    public String getCityOfDeparture() {
+        return cityOfDeparture;
     }
 
-    public void setMaxNumberOfPassengers(int maxNumberOfPassengers) {
-        this.maxNumberOfPassengers = maxNumberOfPassengers;
+    public void setCityOfDeparture(String cityOfDeparture) {
+        this.cityOfDeparture = cityOfDeparture;
     }
 
-    public Departure getDestination() {
-        return destination;
+    public String getCityOfArrival() {
+        return cityOfArrival;
     }
 
-    public void setDestination(Departure destination) {
-        this.destination = destination;
+    public void setCityOfArrival(String cityOfArrival) {
+        this.cityOfArrival = cityOfArrival;
     }
 
-    public Flights() {
+    public Date getDate() {
+        return date;
     }
 
-    public int getMaxNumberOfBusinessClass() {
-        return maxNumberOfBusinessClass;
-    }
-
-    public void setMaxNumberOfBusinessClass(int maxNumberOfBusinessClass) {
-        this.maxNumberOfBusinessClass = maxNumberOfBusinessClass;
-    }
-
-    public int getPriceEconomyClass() {
-        return priceEconomyClass;
-    }
-
-    public void setPriceEconomyClass(int priceEconomyClass) {
-        this.priceEconomyClass = priceEconomyClass;
-    }
-
-    public int getPriceBusinessClass() {
-        return priceBusinessClass;
-    }
-
-    public void setPriceBusinessClass(int priceBusinessClass) {
-        this.priceBusinessClass = priceBusinessClass;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Flights flights = (Flights) o;
-        return id == flights.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nameOfAirline, maxNumberOfPassengers, maxNumberOfBusinessClass, priceEconomyClass, priceBusinessClass, destination);
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
