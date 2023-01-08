@@ -1,19 +1,15 @@
 package ba.unsa.etf.rpr.dao;
 
-import ba.unsa.etf.rpr.domain.Arrival;
 import ba.unsa.etf.rpr.domain.Flights;
 import ba.unsa.etf.rpr.exceptions.FlightsException;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
 
 public class FlightsDaoImplementation extends AbstractDao<Flights> implements FlightsDAO{
 
     public FlightsDaoImplementation() {
-        super("Flights");
+        super("flight");
     }
 
     /**
@@ -27,12 +23,10 @@ public class FlightsDaoImplementation extends AbstractDao<Flights> implements Fl
 
         try {
             flight.setId(rs.getInt("id"));
-            flight.setNameOfAirline(rs.getString("airline_name"));
-            flight.setMaxNumberOfPassengers(rs.getInt("max_passengers"));
-            flight.setMaxNumberOfBusinessClass(rs.getInt("max_business_class"));
-            flight.setPriceBusinessClass(rs.getInt("price_business"));
-            flight.setPriceEconomyClass(rs.getInt("price_economy"));
-            flight.setDestination(new DepartureDaoImplementation().getById(rs.getInt("departureId")));
+            flight.setCityOfDeparture(rs.getString("DepartureDestination"));
+            flight.setCityOfArrival(rs.getString("ArrivalDestination"));
+            flight.setDate(rs.getDate("date"));
+            flight.setNameOfAirline(rs.getString("Airline"));
 
             return flight;
         }catch (Exception exception){
@@ -47,14 +41,11 @@ public class FlightsDaoImplementation extends AbstractDao<Flights> implements Fl
     public Map<String, Object> object2row(Flights object) {
         Map<String, Object> item = new TreeMap<>();
 
-
-        item.put("id", object.getNameOfAirline());
-        item.put("airline_name", object.getDestination().getId());
-        item.put("max_passengers", object.getMaxNumberOfPassengers());
-        item.put("max_business_class", object.getMaxNumberOfBusinessClass());
-        item.put("price_economy", object.getPriceEconomyClass());
-        item.put("price_business", object.getPriceBusinessClass());
-        item.put("departureId", object.getDestination().getId());
+        item.put("id", object.getId());
+        item.put("DepartureDestination", object.getCityOfDeparture());
+        item.put("ArrivalDestination", object.getCityOfArrival());
+        item.put("date", object.getDate());
+        item.put("Airline", object.getNameOfAirline());
 
         return item;
     }
@@ -65,6 +56,38 @@ public class FlightsDaoImplementation extends AbstractDao<Flights> implements Fl
      */
     @Override
     public List<Flights> getByDate(Date dateOfFlight) throws FlightsException{
-        return executeQuery("SELECT * FROM Departure WHERE date = ?", new Object[]{dateOfFlight});
+        return executeQuery("SELECT * FROM flight WHERE date = ?", new Object[]{dateOfFlight});
     }
+
+    /**
+     * @param cityOfArrival
+     * @return
+     * @throws FlightsException
+     */
+    @Override
+    public List<Flights> getByArrival(String cityOfArrival) throws FlightsException {
+        return executeQuery("SELECT * FROM flight WHERE ArrivalDestination = ?", new Object[]{cityOfArrival});
+    }
+
+    /**
+     * @param cityOfDeparture
+     * @return
+     * @throws FlightsException
+     */
+    @Override
+    public List<Flights> getByDeparture(String cityOfDeparture) throws FlightsException {
+        return executeQuery("SELECT * FROM flight WHERE DepartureDestination = ?", new Object[]{cityOfDeparture});
+    }
+
+    /**
+     * @param flight
+     * @return
+     * @throws FlightsException
+     */
+    @Override
+    public List<Flights> searchFlight(Flights flight) throws FlightsException {
+        return executeQuery("SELECT * FROM flight WHERE DepartureDestination = ? AND ArrivalDestination = ? AND date = ?", new Object[]{flight.getCityOfDeparture(), flight.getCityOfArrival(), flight.getDate()});
+    }
+
+
 }
