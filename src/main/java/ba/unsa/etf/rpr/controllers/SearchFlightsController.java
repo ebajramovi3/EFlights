@@ -10,7 +10,6 @@ public class SearchFlightsController {
     public TextField DepartureId;
     public TextField ArrivalId;
     public DatePicker DepartingDateId;
-    public DatePicker ReturningDateId;
     public Button cancelButton;
     public Button SearchButtonId;
 
