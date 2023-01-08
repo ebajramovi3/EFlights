@@ -1,6 +1,5 @@
 package ba.unsa.etf.rpr.business;
 
-import ba.unsa.etf.rpr.domain.Arrival;
 import ba.unsa.etf.rpr.domain.Flights;
 import ba.unsa.etf.rpr.exceptions.FlightsException;
 import ba.unsa.etf.rpr.dao.DaoFactory;
@@ -32,5 +31,17 @@ public class FlightsManager {
             }
             throw e;
         }
+    }
+
+    public List<Flights> searchFlight(Flights flight) throws FlightsException{
+        return DaoFactory.flightsDao().searchFlight(flight);
+    }
+
+    public List<Flights> searchDepartures(String cityOfDeparture) throws FlightsException{
+        return DaoFactory.flightsDao().getByDeparture(cityOfDeparture);
+    }
+
+    public List<Flights> searchArrivals(String cityOfArrival) throws FlightsException{
+        return DaoFactory.flightsDao().getByArrival(cityOfArrival);
     }
 }
