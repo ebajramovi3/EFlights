@@ -14,4 +14,7 @@ public interface FlightsDAO extends  DAO<Flights>{
     List<Flights> getByDeparture(String cityOfDeparture) throws FlightsException;
 
     List<Flights> searchFlight(Flights flight) throws FlightsException;
+
+    List<Flights> searchByArrivalDeparture(String cityOfArrival, String cityOfDeparture) throws FlightsException;
+
 }

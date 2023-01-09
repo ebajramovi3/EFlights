@@ -89,5 +89,15 @@ public class FlightsDaoImplementation extends AbstractDao<Flights> implements Fl
         return executeQuery("SELECT * FROM flight WHERE DepartureDestination = ? AND ArrivalDestination = ? AND date = ?", new Object[]{flight.getCityOfDeparture(), flight.getCityOfArrival(), flight.getDate()});
     }
 
+    /**
+     * @param cityOfArrival
+     * @param cityOfDeparture
+     * @return
+     * @throws FlightsException
+     */
+    @Override
+    public List<Flights> searchByArrivalDeparture(String cityOfArrival, String cityOfDeparture) throws FlightsException {
+        return executeQuery("SELECT * FROM flight WHERE DepartureDestination = ? AND ArrivalDestination = ?", new Object[]{cityOfDeparture, cityOfArrival});
+    }
 
 }

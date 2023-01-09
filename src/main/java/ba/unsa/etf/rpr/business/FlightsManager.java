@@ -44,4 +44,8 @@ public class FlightsManager {
     public List<Flights> searchArrivals(String cityOfArrival) throws FlightsException{
         return DaoFactory.flightsDao().getByArrival(cityOfArrival);
     }
+
+    public List<Flights> searchArrivalsDepartures(String cityOfArrival, String cityOfDeparture) throws FlightsException{
+        return DaoFactory.flightsDao().searchByArrivalDeparture(cityOfArrival, cityOfDeparture);
+    }
 }
