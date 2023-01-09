@@ -17,6 +17,6 @@
             <TableColumn fx:id="dateId" editable="false" prefWidth="75.0" resizable="false" text="Date" />
         </columns>
       </TableView>
-      <TextField fx:id="searchId" layoutX="26.0" layoutY="9.0" promptText="Search flights:" />
+      <TextField fx:id="searchId" layoutX="26.0" layoutY="9.0" onAction="#SearchAction" promptText="Search flights:" />
    </children>
 </AnchorPane>
