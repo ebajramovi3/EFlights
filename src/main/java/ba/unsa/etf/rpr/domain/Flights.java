@@ -1,12 +1,13 @@
 package ba.unsa.etf.rpr.domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
 public class Flights implements Idable{
     private int id;
     private String nameOfAirline, cityOfDeparture, cityOfArrival;
-    private Date date;
+    private LocalDate date;
 
     /**
      * @param id
@@ -24,7 +25,7 @@ public class Flights implements Idable{
         return id;
     }
 
-    public Flights(int id, String nameOfAirline, String cityOfDeparture, String cityOfArrival, Date date) {
+    public Flights(int id, String nameOfAirline, String cityOfDeparture, String cityOfArrival, LocalDate date) {
         this.id = id;
         this.nameOfAirline = nameOfAirline;
         this.cityOfDeparture = cityOfDeparture;
@@ -59,11 +60,11 @@ public class Flights implements Idable{
         this.cityOfArrival = cityOfArrival;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 }
