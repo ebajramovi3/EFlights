@@ -1,23 +1,23 @@
 package ba.unsa.etf.rpr.domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
 public class Persons implements Idable{
     private int passportId;
     private String firstName, lastName, citizenship;
-    private Date dateOfBirth;
-    private boolean checkIn, businessClass;
+    private LocalDate dateOfBirth;
+    private boolean checkIn;
     private Flights flight;
 
-    public Persons(int passportId, String firstName, String lastName, String citizenship, Date dateOfBirth, boolean checkIn, boolean businessClass, Flights flight) {
+    public Persons(int passportId, String firstName, String lastName, String citizenship, LocalDate dateOfBirth, boolean checkIn, Flights flight) {
         this.passportId = passportId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.citizenship = citizenship;
         this.dateOfBirth = dateOfBirth;
         this.checkIn = checkIn;
-        this.businessClass = businessClass;
         this.flight = flight;
     }
 
@@ -49,11 +49,11 @@ public class Persons implements Idable{
         this.citizenship = citizenship;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -63,14 +63,6 @@ public class Persons implements Idable{
 
     public void setCheckIn(boolean checkIn) {
         this.checkIn = checkIn;
-    }
-
-    public boolean isBusinessClass() {
-        return businessClass;
-    }
-
-    public void setBusinessClass(boolean businessClass) {
-        this.businessClass = businessClass;
     }
 
     public Flights getFlight() {
@@ -91,7 +83,7 @@ public class Persons implements Idable{
 
     @Override
     public int hashCode() {
-        return Objects.hash(passportId, firstName, lastName, citizenship, dateOfBirth, checkIn, businessClass, flight);
+        return Objects.hash(passportId, firstName, lastName, citizenship, dateOfBirth, checkIn, flight);
     }
 
     /**
