@@ -4,6 +4,7 @@ import ba.unsa.etf.rpr.business.FlightsManager;
 import ba.unsa.etf.rpr.domain.Flights;
 import ba.unsa.etf.rpr.exceptions.FlightsException;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -15,17 +16,17 @@ import java.util.Date;
 public class DepartureController {
     FlightsManager departureManager = new FlightsManager();
 
-    public TableView tableId;
+    public TableView<Flights> tableId;
     public TableColumn<Flights, String> airlineId;
     public TableColumn<Flights, String> destinationId;
     public TableColumn<Flights, Integer> flightNumberId;
     public TableColumn<Flights, Date> dateId;
-    public TextField searchId;
+    public TextField searchFlightsId;
 
     @FXML
     public void initialize(){
         airlineId.setCellValueFactory(new PropertyValueFactory<Flights, String>("nameOfAirline"));
-        destinationId.setCellValueFactory(new PropertyValueFactory<Flights, String>("cityOfDeparture"));
+        destinationId.setCellValueFactory(new PropertyValueFactory<Flights, String>("cityOfArrival"));
         flightNumberId.setCellValueFactory(new PropertyValueFactory<Flights, Integer>("id"));
         dateId.setCellValueFactory(new PropertyValueFactory<Flights, Date>("date"));
 
@@ -34,6 +35,15 @@ public class DepartureController {
             tableId.refresh();
         } catch (FlightsException exception){
 
+        }
+    }
+
+    public void SearchFlightsAction(ActionEvent actionEvent) {
+        try{
+            tableId.setItems(FXCollections.observableList(departureManager.searchArrivalsDepartures(searchFlightsId.getText(), "Sarajevo")));
+            tableId.refresh();
+        } catch (FlightsException e){
+            System.out.println(e.getMessage());
         }
     }
 }
