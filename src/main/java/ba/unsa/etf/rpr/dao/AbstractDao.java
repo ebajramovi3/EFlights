@@ -82,7 +82,7 @@ public abstract class AbstractDao<T extends Idable> implements DAO<T>{
         Map.Entry<String, String> columns = prepareInsertParts(row);
 
         StringBuilder builder = new StringBuilder();
-        builder.append("INSERT INTO").append(tableName);
+        builder.append("INSERT INTO ").append(tableName);
         builder.append(" (").append(columns.getKey()).append(") ");
         builder.append("VALUES (").append(columns.getValue()).append(")");
 
