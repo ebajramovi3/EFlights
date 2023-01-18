@@ -23,7 +23,7 @@ public class PersonsDaoImplementation extends AbstractDao<Persons> implements Pe
         try{
             Persons person = new Persons();
 
-            person.setId(rs.getInt("passportId"));
+            person.setId(rs.getInt("id"));
             person.setFirstName(rs.getString("first_name"));
             person.setLastName(rs.getString("last_name"));
             person.setDateOfBirth(rs.getDate("date_of_birth").toLocalDate());

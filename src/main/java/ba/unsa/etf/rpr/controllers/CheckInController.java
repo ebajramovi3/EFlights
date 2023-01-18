@@ -24,8 +24,6 @@ public class CheckInController {
 
     public void okButtonAction(ActionEvent actionEvent) {
         boolean incorrectData = false;
-        do {
-            incorrectData = false;
             try {
                 Persons person = new Persons(Integer.valueOf(passportId.getText()), firstNameId.getText(), lastNameId.getText(), CitizenshipId.getText(), dateId.getValue(), true, flightsManager.getById(Integer.valueOf(flightNumberId.getText())));
                 Persons getFromDB = personsManager.getById(person.getId());
@@ -39,7 +37,7 @@ public class CheckInController {
             } catch (FlightsException exception) {
                 new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
             }
-        }while(incorrectData);
+        if(!incorrectData)
         OkButtonId.getScene().getWindow().hide();
     }
 

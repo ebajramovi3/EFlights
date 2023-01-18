@@ -5,9 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -36,8 +34,9 @@ public class SearchFlightsController {
             stage.setTitle("Flights");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.show();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception exception) {
+            new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
         }
+        SearchButtonId.getScene().getWindow().hide();
     }
 }

@@ -14,7 +14,7 @@ public class LoginController {
     public Button okButton;
     public TextField UsernameId;
     public Label IncorrectUsername;
-    public TextField PasswordId;
+    public PasswordField PasswordId;
     public Label IncorrectPassword;
     public Button CancelButton;
 
@@ -26,9 +26,7 @@ public class LoginController {
     public void okButtonAction(ActionEvent actionEvent) {
         boolean incorrectData = false;
             try{
-                Employees employee = employeeManager.getByUsername(UsernameId.getText());
-                if(!employee.getPassword().equals(PasswordId.getText()))
-                    throw new FlightsException("Incorrect password!");
+                employeeManager.checkPassword(UsernameId.getText(), PasswordId.getText());
             } catch (FlightsException exception){
                 incorrectData = true;
                 new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();

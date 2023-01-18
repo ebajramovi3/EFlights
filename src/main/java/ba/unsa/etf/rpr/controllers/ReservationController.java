@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class ReservationController {
     private int id;
@@ -26,10 +27,9 @@ public class ReservationController {
     public void OkAction(ActionEvent actionEvent){
         try{
             personManager.add(new Persons(Integer.valueOf(PassportId.getText()), FirstNameId.getText(), LastNameId.getText(), null, null, false, flightsManager.getById(id)));
-            
         } catch (FlightsException exception){
             new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
         }
-
+        OkButtonId.getScene().getWindow().hide();
     }
 }

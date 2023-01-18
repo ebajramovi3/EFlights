@@ -73,7 +73,7 @@ public abstract class AbstractDao<T extends Idable> implements DAO<T>{
             stmt.setObject(1, id);
             stmt.executeUpdate();
         }catch (SQLException exception){
-            throw new FlightsException(exception.getMessage(), exception);
+            throw new FlightsException("No id found!");
         }
     }
 
@@ -100,7 +100,7 @@ public abstract class AbstractDao<T extends Idable> implements DAO<T>{
 
             return item;
         }catch (Exception exception){
-            throw new FlightsException(exception.getMessage(), exception);
+            throw new FlightsException("This data already exists!");
         }
     }
 
@@ -154,7 +154,10 @@ public abstract class AbstractDao<T extends Idable> implements DAO<T>{
     }
 
     public List<T> getAll() throws FlightsException{
-        return executeQuery("SELECT * FROM "+ tableName, null);
+        List<T> all = executeQuery("SELECT * FROM "+ tableName, null);
+        if(all.isEmpty())
+            throw new FlightsException("No data found!");
+        return all;
     }
 
     private Map.Entry<String, String> prepareInsertParts(Map<String, Object> row){

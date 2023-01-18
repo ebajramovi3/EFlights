@@ -6,9 +6,7 @@ import ba.unsa.etf.rpr.exceptions.FlightsException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.Date;
@@ -16,7 +14,7 @@ import java.util.Date;
 public class ArrivalsController {
     private final FlightsManager arrivalManager = new FlightsManager();
 
-    public TableView tableId;
+    public TableView<Flights> tableId;
     public TableColumn<Flights, String> airlineId;
     public TableColumn<Flights, String> destinationId;
     public TableColumn<Flights, Integer> flightNumberId;
@@ -34,18 +32,15 @@ public class ArrivalsController {
             tableId.setItems(FXCollections.observableList(arrivalManager.searchArrivals("Sarajevo")));
             tableId.refresh();
         } catch (FlightsException exception){
-
         }
-
-
     }
 
     public void SearchAction(ActionEvent actionEvent) {
         try{
             tableId.setItems(FXCollections.observableList(arrivalManager.searchArrivalsDepartures("Sarajevo", searchId.getText())));
             tableId.refresh();
-        } catch (FlightsException e){
-            System.out.println(e.getMessage());
+        } catch (FlightsException exception){
+            new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
         }
     }
 }
