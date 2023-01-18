@@ -19,7 +19,7 @@ public class PersonsManager {
     }
 
     public  void validateCitizenship(String cs) throws FlightsException{
-        if(cs == null || cs.length() > 100)
+        if(cs != null && cs.length() > 100)
             throw new FlightsException("Citizenship must have less then 100 letters.");
     }
 
@@ -36,5 +36,17 @@ public class PersonsManager {
             }
             throw e;
         }
+    }
+
+    public void update(Persons person) throws FlightsException{
+        try{
+            DaoFactory.personsDao().update(person);
+        } catch (Exception e){
+            throw new FlightsException("No such reservation!");
+        }
+    }
+
+    public Persons getById(int id) throws FlightsException {
+        return DaoFactory.personsDao().getById(id);
     }
 }
