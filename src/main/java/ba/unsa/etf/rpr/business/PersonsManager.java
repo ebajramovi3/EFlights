@@ -49,4 +49,12 @@ public class PersonsManager {
     public Persons getById(int id) throws FlightsException {
         return DaoFactory.personsDao().getById(id);
     }
+
+    public List<Persons> getAll() throws FlightsException{
+        return DaoFactory.personsDao().getAll();
+    }
+
+    public void delete(int id) throws FlightsException{
+        DaoFactory.personsDao().delete(id);
+    }
 }
