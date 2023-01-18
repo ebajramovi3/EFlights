@@ -1,15 +1,10 @@
 package ba.unsa.etf.rpr.dao;
 
-import ba.unsa.etf.rpr.domain.Departure;
 import ba.unsa.etf.rpr.domain.Employees;
 import ba.unsa.etf.rpr.exceptions.FlightsException;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 

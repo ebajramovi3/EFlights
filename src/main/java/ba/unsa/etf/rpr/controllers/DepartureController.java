@@ -6,9 +6,7 @@ import ba.unsa.etf.rpr.exceptions.FlightsException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.Date;
@@ -42,8 +40,8 @@ public class DepartureController {
         try{
             tableId.setItems(FXCollections.observableList(departureManager.searchArrivalsDepartures(searchFlightsId.getText(), "Sarajevo")));
             tableId.refresh();
-        } catch (FlightsException e){
-            System.out.println(e.getMessage());
+        } catch (FlightsException exception){
+            new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
         }
     }
 }

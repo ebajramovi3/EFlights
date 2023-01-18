@@ -25,7 +25,7 @@ public class FlightsDaoImplementation extends AbstractDao<Flights> implements Fl
             flight.setId(rs.getInt("id"));
             flight.setCityOfDeparture(rs.getString("DepartureDestination"));
             flight.setCityOfArrival(rs.getString("ArrivalDestination"));
-            flight.setDate(rs.getDate("date"));
+            flight.setDate(rs.getDate("date").toLocalDate());
             flight.setNameOfAirline(rs.getString("Airline"));
 
             return flight;

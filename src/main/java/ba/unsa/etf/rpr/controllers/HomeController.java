@@ -26,8 +26,8 @@ public class HomeController {
         Stage stage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Arrivals.fxml"));
-            ArrivalsController controller = new ArrivalsController();
-            loader.setController(controller);
+            //ArrivalsController controller = new ArrivalsController();
+            //loader.setController(controller);
             stage.setTitle("Arrivals");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.show();
@@ -40,8 +40,8 @@ public class HomeController {
         Stage stage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Departures.fxml"));
-            DepartureController controller = new DepartureController();
-            loader.setController(controller);
+            //DepartureController controller = new DepartureController();
+            //loader.setController(controller);
             stage.setTitle("Departures");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.show();
@@ -54,8 +54,8 @@ public class HomeController {
         Stage stage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SearchFlights.fxml"));
-            SearchFlightsController controller = new SearchFlightsController();
-            loader.setController(controller);
+            //SearchFlightsController controller = new SearchFlightsController();
+            //loader.setController(controller);
             stage.setTitle("Search");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.show();
@@ -68,8 +68,8 @@ public class HomeController {
         Stage stage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CheckIn.fxml"));
-            CheckInController controller = new CheckInController();
-            loader.setController(controller);
+            //CheckInController controller = new CheckInController();
+            //loader.setController(controller);
             stage.setTitle("Check In");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.show();
@@ -82,8 +82,8 @@ public class HomeController {
         Stage stage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LogIn.fxml"));
-            LoginController controller = new LoginController();
-            loader.setController(controller);
+            //LoginController controller = new LoginController();
+            //loader.setController(controller);
             stage.setTitle("Log In");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.show();
