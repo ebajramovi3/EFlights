@@ -57,6 +57,12 @@ public class EmployeeManager {
 
     public boolean checkPassword(String username, String password) throws FlightsException{
         Employees employee = getByUsername(username);
+        if(employee.getPassword() != password)
+            throw new FlightsException("Incorrect password!");
         return employee.getPassword() == password;
+    }
+
+    public Employees update(Employees employee) throws FlightsException {
+        return DaoFactory.employeesDao().update(employee);
     }
 }

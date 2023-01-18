@@ -46,6 +46,20 @@ public class FlightsManager {
     }
 
     public List<Flights> searchArrivalsDepartures(String cityOfArrival, String cityOfDeparture) throws FlightsException{
+        if((cityOfArrival == null || cityOfArrival.equals("")) && (cityOfDeparture == null || cityOfDeparture.equals("")))
+            return DaoFactory.flightsDao().getAll();
+        if(cityOfArrival == null || cityOfArrival.equals(""))
+            return DaoFactory.flightsDao().getByDeparture(cityOfDeparture);
+        if(cityOfDeparture == null || cityOfDeparture.equals(""))
+            return DaoFactory.flightsDao().getByArrival(cityOfArrival);
         return DaoFactory.flightsDao().searchByArrivalDeparture(cityOfArrival, cityOfDeparture);
+    }
+
+    public Flights getById(int id) throws FlightsException {
+        return DaoFactory.flightsDao().getById(id);
+    }
+
+    public Flights update(Flights flights) throws FlightsException {
+        return DaoFactory.flightsDao().update(flights);
     }
 }
