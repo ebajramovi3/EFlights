@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -45,7 +46,7 @@ public class FlightsController {
             tableId.setItems(FXCollections.observableList(flightsManager.searchFlight(flights)));
             tableId.refresh();
         } catch (FlightsException exception){
-
+            new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
@@ -59,8 +60,8 @@ public class FlightsController {
             stage.setTitle("Reservation");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.show();
-        } catch (Exception e){
-
+        } catch (IOException e){
+            new Alert(Alert.AlertType.NONE, e.getMessage(), ButtonType.OK).show();
         }
     }
 }
