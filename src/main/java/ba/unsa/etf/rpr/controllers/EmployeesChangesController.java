@@ -31,6 +31,13 @@ public class EmployeesChangesController {
     }
 
     public void deleteButtonAction(ActionEvent actionEvent) {
+        Employees employee = tableId.getSelectionModel().getSelectedItem();
+        try {
+            employeeManager.delete(employee.getId());
+            tableId.refresh();
+        } catch (FlightsException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

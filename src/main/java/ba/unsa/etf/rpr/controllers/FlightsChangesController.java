@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.controllers;
 
 import ba.unsa.etf.rpr.business.FlightsManager;
+import ba.unsa.etf.rpr.domain.Employees;
 import ba.unsa.etf.rpr.domain.Flights;
 import ba.unsa.etf.rpr.exceptions.FlightsException;
 import javafx.collections.FXCollections;
@@ -31,6 +32,13 @@ public class FlightsChangesController {
     }
 
     public void deleteButtonAction(ActionEvent actionEvent) {
+        Flights flight = tableId.getSelectionModel().getSelectedItem();
+        try {
+            flightsManager.delete(flight.getId());
+            tableId.refresh();
+        } catch (FlightsException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -45,7 +53,7 @@ public class FlightsChangesController {
             tableId.setItems(FXCollections.observableList(flightsManager.getAll()));
             tableId.refresh();
         } catch (FlightsException exception){
-
+            new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
         }
     }
 }
