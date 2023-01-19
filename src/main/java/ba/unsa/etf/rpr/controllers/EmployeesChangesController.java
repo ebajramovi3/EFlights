@@ -39,7 +39,6 @@ public class EmployeesChangesController {
             throw new RuntimeException(e);
         }
         stage.show();
-        tableId.refresh();
     }
 
     public void updateButtonAction(ActionEvent actionEvent) {
@@ -55,7 +54,6 @@ public class EmployeesChangesController {
             throw new RuntimeException(e);
         }
         stage.show();
-        tableId.refresh();
     }
 
     public void deleteButtonAction(ActionEvent actionEvent) {
@@ -66,7 +64,12 @@ public class EmployeesChangesController {
         } catch (FlightsException e) {
             throw new RuntimeException(e);
         }
-        tableId.refresh();
+        try{
+            tableId.setItems(FXCollections.observableList(employeeManager.getAll()));
+            tableId.refresh();
+        }catch (FlightsException exception){
+            new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
+        }
     }
 
     @FXML

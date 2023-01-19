@@ -66,6 +66,12 @@ public class FlightsChangesController {
         } catch (FlightsException e) {
             throw new RuntimeException(e);
         }
+        try{
+            tableId.setItems(FXCollections.observableList(flightsManager.getAll()));
+            tableId.refresh();
+        } catch (FlightsException exception){
+            new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
+        }
     }
 
     @FXML
