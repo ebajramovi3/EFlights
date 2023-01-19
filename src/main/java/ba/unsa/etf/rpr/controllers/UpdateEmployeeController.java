@@ -18,6 +18,8 @@ public class UpdateEmployeeController {
     public PasswordField newPassword;
     public TextField firstName;
     public Button okButton;
+    public Label newPasswordLabel;
+    public Label oldPasswordLabel;
 
     UpdateEmployeeController(Employees employees){
         this.employees = employees;
@@ -29,6 +31,18 @@ public class UpdateEmployeeController {
         lastName.setText(employees.getLastName());
         firstName.setText(employees.getFirstName());
         usernameId.setText(employees.getUsername());
+        oldPassword.textProperty().addListener((abs, oldValue, newValue)->{
+            if(newValue.length() >= 8)
+                oldPasswordLabel.setText("");
+            else
+                oldPasswordLabel.setText("Incorrect format");
+        });
+        newPassword.textProperty().addListener((abs, oldValue, newValue)->{
+            if(newValue.length() >= 8)
+                newPasswordLabel.setText("");
+            else
+                newPasswordLabel.setText("Incorrect format");
+        });
     }
 
     public void okButtonAction(ActionEvent actionEvent) {
