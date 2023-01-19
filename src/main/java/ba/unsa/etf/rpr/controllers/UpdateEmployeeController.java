@@ -20,6 +20,7 @@ public class UpdateEmployeeController {
     public Button okButton;
     public Label newPasswordLabel;
     public Label oldPasswordLabel;
+    public Label usernameLabel;
 
     UpdateEmployeeController(Employees employees){
         this.employees = employees;
@@ -42,6 +43,12 @@ public class UpdateEmployeeController {
                 newPasswordLabel.setText("");
             else
                 newPasswordLabel.setText("Incorrect format");
+        });
+        usernameId.textProperty().addListener((abs, oldValue, newValue)->{
+            if(newValue.length() >= 5)
+                usernameLabel.setText("");
+            else
+                usernameLabel.setText("Incorrect format");
         });
     }
 
