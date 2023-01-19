@@ -32,11 +32,11 @@
                   <Insets left="10.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="PasswordId" promptText="Password:">
+            <PasswordField fx:id="PasswordId" promptText="Password:">
                <VBox.margin>
                   <Insets left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
-            </TextField>
+            </PasswordField>
             <Label fx:id="IncorrectPassword" textFill="#dd0000">
                <VBox.margin>
                   <Insets left="10.0" />
