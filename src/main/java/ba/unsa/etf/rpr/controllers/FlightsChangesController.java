@@ -7,10 +7,16 @@ import ba.unsa.etf.rpr.exceptions.FlightsException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Date;
+
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class FlightsChangesController {
     private final FlightsManager flightsManager = new FlightsManager();
@@ -26,9 +32,30 @@ public class FlightsChangesController {
     public Button deleteButton;
 
     public void addButtonAction(ActionEvent actionEvent) {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/addFlight.fxml"));
+        stage.setTitle("Add flight");
+        try {
+            stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stage.show();
     }
 
     public void updateButtonAction(ActionEvent actionEvent) {
+        Flights flights = tableId.getSelectionModel().getSelectedItem();
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/updateFlight.fxml"));
+        UpdateFlightController controller = new UpdateFlightController(flights);
+        loader.setController(controller);
+        stage.setTitle("Update flight");
+        try {
+            stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stage.show();
     }
 
     public void deleteButtonAction(ActionEvent actionEvent) {
