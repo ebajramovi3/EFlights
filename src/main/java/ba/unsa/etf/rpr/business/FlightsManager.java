@@ -7,6 +7,7 @@ import ba.unsa.etf.rpr.dao.DaoFactory;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -58,25 +59,33 @@ public class FlightsManager {
     }
 
     public List<Flights> searchFlight(Flights flight) throws FlightsException{
+        trimData(flight);
+        validateCity(flight.getCityOfDeparture());
+        validateCity(flight.getCityOfArrival());
+        validateDate(flight.getDate());
         return DaoFactory.flightsDao().searchFlight(flight);
     }
 
     public List<Flights> searchDepartures(String cityOfDeparture) throws FlightsException{
+        cityOfDeparture = cityOfDeparture.trim();
+        validateCity(cityOfDeparture);
         return DaoFactory.flightsDao().getByDeparture(cityOfDeparture);
     }
 
     public List<Flights> searchArrivals(String cityOfArrival) throws FlightsException{
+        cityOfArrival= cityOfArrival.trim();
+        validateCity(cityOfArrival);
         return DaoFactory.flightsDao().getByArrival(cityOfArrival);
     }
 
     public List<Flights> searchArrivalsDepartures(String cityOfArrival, String cityOfDeparture) throws FlightsException{
-        if((cityOfArrival == null || cityOfArrival.equals("")) && (cityOfDeparture == null || cityOfDeparture.equals("")))
+        if((cityOfArrival == null || cityOfArrival.trim().equals("")) && (cityOfDeparture == null || cityOfDeparture.trim().equals("")))
             return DaoFactory.flightsDao().getAll();
-        if(cityOfArrival == null || cityOfArrival.equals(""))
-            return DaoFactory.flightsDao().getByDeparture(cityOfDeparture);
-        if(cityOfDeparture == null || cityOfDeparture.equals(""))
-            return DaoFactory.flightsDao().getByArrival(cityOfArrival);
-        return DaoFactory.flightsDao().searchByArrivalDeparture(cityOfArrival, cityOfDeparture);
+        if(cityOfArrival == null || cityOfArrival.trim().equals(""))
+            return DaoFactory.flightsDao().getByDeparture(cityOfDeparture.trim());
+        if(cityOfDeparture == null || cityOfDeparture.trim().equals(""))
+            return DaoFactory.flightsDao().getByArrival(cityOfArrival.trim());
+        return DaoFactory.flightsDao().searchByArrivalDeparture(cityOfArrival.trim(), cityOfDeparture.trim());
     }
 
     public Flights getById(int id) throws FlightsException {
@@ -88,4 +97,14 @@ public class FlightsManager {
         validateFlight(flights);
         return DaoFactory.flightsDao().update(flights);
     }
+
+    public List<Flights> getByDate(LocalDate Date) throws FlightsException {
+        validateDate(Date);
+        return DaoFactory.flightsDao().getByDate(Date);
+    }
+
+    public List<Flights> getByCurrentDate() throws FlightsException {
+        return DaoFactory.flightsDao().getByCurrentDate(Instant.ofEpochMilli(Instant.now().toEpochMilli()).atZone(systemDefault()).toLocalDate());
+    }
 }
+
