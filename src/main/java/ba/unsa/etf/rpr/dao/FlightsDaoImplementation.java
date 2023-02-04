@@ -4,6 +4,7 @@ import ba.unsa.etf.rpr.domain.Flights;
 import ba.unsa.etf.rpr.exceptions.FlightsException;
 
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.*;
 
 public class FlightsDaoImplementation extends AbstractDao<Flights> implements FlightsDAO{
@@ -25,13 +26,18 @@ public class FlightsDaoImplementation extends AbstractDao<Flights> implements Fl
             flight.setId(rs.getInt("id"));
             flight.setCityOfDeparture(rs.getString("DepartureDestination"));
             flight.setCityOfArrival(rs.getString("ArrivalDestination"));
-            flight.setDate(rs.getDate("date").toLocalDate());
+            java.sql.Date date = rs.getDate("date");
+            if(date == null)
+                flight.setDate(null);
+            else
+                flight.setDate(date.toLocalDate());
             flight.setNameOfAirline(rs.getString("Airline"));
 
-            return flight;
         }catch (Exception exception){
-            throw new FlightsException(exception.getMessage(), exception);
+            //throw new FlightsException(exception.getMessage(), exception);
+            System.out.println(exception.getCause());
         }
+        return flight;
     }
     /**
      * @param object
@@ -55,8 +61,13 @@ public class FlightsDaoImplementation extends AbstractDao<Flights> implements Fl
      * @return
      */
     @Override
-    public List<Flights> getByDate(Date dateOfFlight) throws FlightsException{
+    public List<Flights> getByDate(LocalDate dateOfFlight) throws FlightsException{
         return executeQuery("SELECT * FROM flight WHERE date = ?", new Object[]{dateOfFlight});
+    }
+
+    @Override
+    public List<Flights> getByCurrentDate(LocalDate dateOfFlight) throws FlightsException{
+        return executeQuery("SELECT * FROM flight WHERE date >= CURDATE()", new Object[]{dateOfFlight});
     }
 
     /**
@@ -66,7 +77,7 @@ public class FlightsDaoImplementation extends AbstractDao<Flights> implements Fl
      */
     @Override
     public List<Flights> getByArrival(String cityOfArrival) throws FlightsException {
-        return executeQuery("SELECT * FROM flight WHERE ArrivalDestination = ?", new Object[]{cityOfArrival});
+        return executeQuery("SELECT * FROM flight WHERE ArrivalDestination = ? AND date >= CURDATE()", new Object[]{cityOfArrival});
     }
 
     /**
@@ -76,7 +87,7 @@ public class FlightsDaoImplementation extends AbstractDao<Flights> implements Fl
      */
     @Override
     public List<Flights> getByDeparture(String cityOfDeparture) throws FlightsException {
-        return executeQuery("SELECT * FROM flight WHERE DepartureDestination = ?", new Object[]{cityOfDeparture});
+        return executeQuery("SELECT * FROM flight WHERE DepartureDestination = ? AND date >= CURDATE()", new Object[]{cityOfDeparture});
     }
 
     /**
@@ -86,7 +97,7 @@ public class FlightsDaoImplementation extends AbstractDao<Flights> implements Fl
      */
     @Override
     public List<Flights> searchFlight(Flights flight) throws FlightsException {
-        return executeQuery("SELECT * FROM flight WHERE ArrivalDestination = ? AND date = ? AND DepartureDestination = ? ", new Object[]{flight.getCityOfArrival(), flight.getDate(), flight.getCityOfDeparture()});
+        return executeQuery("SELECT * FROM flight WHERE ArrivalDestination = ? AND date = ?  AND date >= CURDATE() AND DepartureDestination = ? ", new Object[]{flight.getCityOfArrival(), flight.getDate(), flight.getCityOfDeparture()});
     }
 
     /**
@@ -97,7 +108,7 @@ public class FlightsDaoImplementation extends AbstractDao<Flights> implements Fl
      */
     @Override
     public List<Flights> searchByArrivalDeparture(String cityOfArrival, String cityOfDeparture) throws FlightsException {
-        return executeQuery("SELECT * FROM flight WHERE ArrivalDestination = ? AND DepartureDestination = ?", new Object[]{ cityOfArrival, cityOfDeparture});
+        return executeQuery("SELECT * FROM flight WHERE ArrivalDestination = ? AND DepartureDestination = ? AND date >= CURDATE()", new Object[]{ cityOfArrival, cityOfDeparture});
     }
 
 }
