@@ -4,18 +4,43 @@ import ba.unsa.etf.rpr.domain.Flights;
 import ba.unsa.etf.rpr.exceptions.FlightsException;
 import ba.unsa.etf.rpr.dao.DaoFactory;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
+import static java.time.ZoneId.systemDefault;
+
 public class FlightsManager {
+    private void validateCity(String city) throws FlightsException{
+        if(city == null || city.length() < 1 || city.length()> 45)
+            throw new FlightsException("Invalid city!");
+    }
+
+    private void validateAirline(String airlineName) throws FlightsException{
+        if(airlineName == null || airlineName.length() < 1 || airlineName.length()> 45)
+            throw new FlightsException("Invalid airline!");
+    }
+
+    private void validateDate(LocalDate date) throws FlightsException{
+        if((date == null) || date.compareTo(Instant.ofEpochMilli(Instant.now().toEpochMilli()).atZone(systemDefault()).toLocalDate()) < 0)
+            throw new FlightsException("Invalid date!");
+    }
+
+    private void validateFlight(Flights flights) throws FlightsException{
+        validateAirline(flights.getNameOfAirline());
+        validateCity(flights.getCityOfDeparture());
+        validateCity(flights.getCityOfArrival());
+        validateDate(flights.getDate());
+    }
+
+    private void trimData(Flights flights){
+        flights.setCityOfArrival(flights.getCityOfArrival().trim());
+        flights.setCityOfDeparture(flights.getCityOfDeparture().trim());
+        flights.setNameOfAirline(flights.getNameOfAirline().trim());
+    }
     public void delete(int id) throws FlightsException {
-        try {
             DaoFactory.flightsDao().delete(id);
-        } catch (FlightsException e) {
-            if (e.getMessage().contains("FOREIGN KEY")) {
-                throw new FlightsException("Cannot delete flight which is related to destination/departure. First delete related destination before deleting flight.");
-            }
-            throw e;
-        }
     }
 
     public List<Flights> getAll() throws FlightsException{
@@ -23,14 +48,9 @@ public class FlightsManager {
     }
 
     public Flights add(Flights flight) throws FlightsException{
-        try{
+        trimData(flight);
+        validateFlight(flight);
             return DaoFactory.flightsDao().add(flight);
-        }catch (Exception e){
-            if(e.getMessage().contains("UQ_NAME")){
-                throw new FlightsException(e.getMessage(), e);
-            }
-            throw e;
-        }
     }
 
     public List<Flights> searchFlight(Flights flight) throws FlightsException{
@@ -60,6 +80,8 @@ public class FlightsManager {
     }
 
     public Flights update(Flights flights) throws FlightsException {
+        trimData(flights);
+        validateFlight(flights);
         return DaoFactory.flightsDao().update(flights);
     }
 }

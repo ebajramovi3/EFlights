@@ -9,22 +9,29 @@ import java.util.List;
 public class EmployeeManager {
     private void validateUsername(String username) throws FlightsException{
         if(username == null || username.length() <5 || username.length() > 20)
-            throw new FlightsException("Username must be between 5 and 20 letters.");
+            throw new FlightsException("Username must have between 5 and 20 letters.");
     }
 
     private void validatePassword(String password) throws FlightsException{
         if(password == null || password.length() < 8 || password.length() > 20)
-            throw new FlightsException("Password must be between 8 and 20 letters.");
+            throw new FlightsException("Password must have between 8 and 20 letters.");
     }
 
     private void validateFistName(String fn) throws FlightsException{
-        if(fn == null || fn.length() > 45)
-            throw new FlightsException("First name can have max 45 letters.");
+        if(fn == null || fn.length() > 45 || fn.length() < 1)
+            throw new FlightsException("Invalid first name.");
     }
 
     private void validateLastName(String ln) throws FlightsException{
-        if(ln == null || ln.length() > 45)
-            throw new FlightsException("Last name can have max 45 letters.");
+        if(ln == null || ln.length() > 45 || ln.length() < 1)
+            throw new FlightsException("Invalid last name.");
+    }
+
+    private void trimData(Employees employees){
+        employees.setFirstName(employees.getFirstName().trim());
+        employees.setLastName(employees.getLastName().trim());
+        employees.setUsername(employees.getUsername().trim());
+        employees.setPassword(employees.getPassword().trim());
     }
 
     public void delete(int id) throws FlightsException {
@@ -36,8 +43,8 @@ public class EmployeeManager {
     }
 
     public Employees add(Employees employee) throws FlightsException{
-
         try{
+            trimData(employee);
             validateFistName(employee.getFirstName());
             validateLastName(employee.getLastName());
             validateUsername(employee.getUsername());
@@ -63,6 +70,11 @@ public class EmployeeManager {
     }
 
     public Employees update(Employees employee) throws FlightsException {
+        trimData(employee);
+        validateFistName(employee.getFirstName());
+        validateLastName(employee.getLastName());
+        validateUsername(employee.getUsername());
+        validatePassword(employee.getPassword());
         return DaoFactory.employeesDao().update(employee);
     }
 }
