@@ -5,33 +5,38 @@ import ba.unsa.etf.rpr.domain.Employees;
 import ba.unsa.etf.rpr.exceptions.FlightsException;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class EmployeeManager {
     private void validateUsername(String username) throws FlightsException{
         if(username == null || username.length() <5 || username.length() > 20)
-            throw new FlightsException("Username must have between 5 and 20 letters.");
+            throw new FlightsException("Invalid username!");
     }
 
     private void validatePassword(String password) throws FlightsException{
         if(password == null || password.length() < 8 || password.length() > 20)
-            throw new FlightsException("Password must have between 8 and 20 letters.");
+            throw new FlightsException("Invalid password!");
     }
 
-    private void validateFistName(String fn) throws FlightsException{
-        if(fn == null || fn.length() > 45 || fn.length() < 1)
-            throw new FlightsException("Invalid first name.");
+    private void validateFirstName(String fn) throws FlightsException{
+        if(fn == null || fn.length() > 45 || fn.length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(fn).matches())
+            throw new FlightsException("Invalid first name!");
     }
 
     private void validateLastName(String ln) throws FlightsException{
-        if(ln == null || ln.length() > 45 || ln.length() < 1)
-            throw new FlightsException("Invalid last name.");
+        if(ln == null || ln.length() > 45 || ln.length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(ln).matches())
+            throw new FlightsException("Invalid last name!");
     }
 
     private void trimData(Employees employees){
-        employees.setFirstName(employees.getFirstName().trim());
-        employees.setLastName(employees.getLastName().trim());
-        employees.setUsername(employees.getUsername().trim());
-        employees.setPassword(employees.getPassword().trim());
+        if(employees.getFirstName() != null)
+            employees.setFirstName(employees.getFirstName().trim());
+        if(employees.getLastName() != null)
+            employees.setLastName(employees.getLastName().trim());
+        if(employees.getUsername() != null)
+            employees.setUsername(employees.getUsername().trim());
+        if(employees.getPassword() != null)
+            employees.setPassword(employees.getPassword().trim());
     }
 
     public void delete(int id) throws FlightsException {
@@ -43,19 +48,12 @@ public class EmployeeManager {
     }
 
     public Employees add(Employees employee) throws FlightsException{
-        try{
             trimData(employee);
-            validateFistName(employee.getFirstName());
+            validateFirstName(employee.getFirstName());
             validateLastName(employee.getLastName());
             validateUsername(employee.getUsername());
             validatePassword(employee.getPassword());
             return DaoFactory.employeesDao().add(employee);
-        }catch (Exception e){
-            if(e.getMessage().contains("UQ_NAME")){
-                throw new FlightsException(e.getMessage(), e);
-            }
-            throw e;
-        }
     }
 
     public Employees getByUsername(String username) throws FlightsException{
@@ -71,7 +69,7 @@ public class EmployeeManager {
 
     public Employees update(Employees employee) throws FlightsException {
         trimData(employee);
-        validateFistName(employee.getFirstName());
+        validateFirstName(employee.getFirstName());
         validateLastName(employee.getLastName());
         validateUsername(employee.getUsername());
         validatePassword(employee.getPassword());

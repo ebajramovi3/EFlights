@@ -8,17 +8,18 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static java.time.ZoneId.systemDefault;
 
 public class FlightsManager {
     private void validateCity(String city) throws FlightsException{
-        if(city == null || city.length() < 1 || city.length()> 45)
+        if(city == null || city.length() < 1 || city.length()> 45 || !Pattern.compile("[a-zA-Z]*").matcher(city).matches())
             throw new FlightsException("Invalid city!");
     }
 
     private void validateAirline(String airlineName) throws FlightsException{
-        if(airlineName == null || airlineName.length() < 1 || airlineName.length()> 45)
+        if(airlineName == null || airlineName.length() < 1 || airlineName.length()> 45 || !Pattern.compile("[a-zA-Z]*").matcher(airlineName).matches())
             throw new FlightsException("Invalid airline!");
     }
 
@@ -35,8 +36,11 @@ public class FlightsManager {
     }
 
     private void trimData(Flights flights){
+        if(flights.getCityOfArrival() != null)
         flights.setCityOfArrival(flights.getCityOfArrival().trim());
+        if(flights.getCityOfDeparture() != null)
         flights.setCityOfDeparture(flights.getCityOfDeparture().trim());
+        if(flights.getNameOfAirline() != null)
         flights.setNameOfAirline(flights.getNameOfAirline().trim());
     }
     public void delete(int id) throws FlightsException {
