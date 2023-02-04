@@ -2,12 +2,16 @@ package ba.unsa.etf.rpr.controllers;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -19,6 +23,28 @@ public class HomeController {
     public Button CheckInId;
 
     public HomeController() {
+    }
+
+    private void openDialog(String title, String file, Object controller){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(file));
+            loader.setController(controller);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.setTitle(title);
+            stage.initStyle(StageStyle.UTILITY);
+            stage.show();
+        }catch (Exception e){
+            new Alert(Alert.AlertType.NONE, e.getMessage(), ButtonType.OK).show();
+        }
+    }
+
+    public void closeApp(ActionEvent actionEvent){
+        Platform.exit();
+        System.exit(0);
+    }
+    public void openAbout(ActionEvent actionEvent){
+        openDialog("About", "/fxml/about.fxml", null);
     }
 
 
