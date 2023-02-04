@@ -26,7 +26,11 @@ public class PersonsDaoImplementation extends AbstractDao<Persons> implements Pe
             person.setId(rs.getInt("id"));
             person.setFirstName(rs.getString("first_name"));
             person.setLastName(rs.getString("last_name"));
-            person.setDateOfBirth(rs.getDate("date_of_birth").toLocalDate());
+            java.sql.Date date = rs.getDate("date_of_birth");
+            if(date == null)
+                person.setDateOfBirth(null);
+            else
+                person.setDateOfBirth(date.toLocalDate());
             person.setCitizenship(rs.getString("citizenship"));
             person.setCheckIn(rs.getBoolean("check_in"));
             person.setFlight(new FlightsDaoImplementation().getById(rs.getInt("flightId")));
