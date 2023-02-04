@@ -37,6 +37,8 @@ public class AddEmployeeController {
 
     public void okButtonAction(ActionEvent actionEvent) {
         try{
+            if(employeeId.getText().length() == 0)
+                throw new FlightsException("No id specified!");
             Employees employees = new Employees();
             employees.setId(Integer.parseInt(employeeId.getText()));
             employees.setFirstName(firstName.getText());

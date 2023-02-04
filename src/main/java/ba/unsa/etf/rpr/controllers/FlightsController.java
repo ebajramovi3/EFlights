@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
@@ -51,17 +52,23 @@ public class FlightsController {
     }
 
     public void ReservationAction(ActionEvent actionEvent) {
-        Flights flight = tableId.getSelectionModel().getSelectedItem();
-        Stage stage = new Stage();
+
         try {
+            if(tableId.getSelectionModel().isEmpty())
+            throw new FlightsException("No rows selected!");
+
+            Stage stage = new Stage();
+            Flights flight = tableId.getSelectionModel().getSelectedItem();
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/reservation.fxml"));
             ReservationController controller = new ReservationController(flight.getId());
             loader.setController(controller);
             stage.setTitle("Reservation");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.show();
+        } catch (FlightsException exception) {
+            new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
         } catch (IOException e){
-            new Alert(Alert.AlertType.NONE, e.getMessage(), ButtonType.OK).show();
         }
     }
 }

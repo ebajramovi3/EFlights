@@ -36,33 +36,40 @@ public class EmployeesChangesController {
         try {
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         } catch (IOException e) {
-            throw new RuntimeException(e);
         }
         stage.show();
     }
 
     public void updateButtonAction(ActionEvent actionEvent) {
-        Employees employee = tableId.getSelectionModel().getSelectedItem();
-        Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/updateEmployee.fxml"));
-        UpdateEmployeeController controller = new UpdateEmployeeController(employee);
-        loader.setController(controller);
-        stage.setTitle("Update employee");
         try {
+            if(tableId.getSelectionModel().isEmpty())
+                throw new FlightsException("No rows selected!");
+
+            Employees employee = tableId.getSelectionModel().getSelectedItem();
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/updateEmployee.fxml"));
+            UpdateEmployeeController controller = new UpdateEmployeeController(employee);
+            loader.setController(controller);
+            stage.setTitle("Update employee");
+
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            stage.show();
+        } catch (FlightsException exception) {
+            new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
+        } catch (IOException e){
         }
-        stage.show();
+
     }
 
     public void deleteButtonAction(ActionEvent actionEvent) {
         Employees employee = tableId.getSelectionModel().getSelectedItem();
         try {
+            if(tableId.getSelectionModel().isEmpty())
+                throw new FlightsException("No rows selected!");
             employeeManager.delete(employee.getId());
             tableId.refresh();
-        } catch (FlightsException e) {
-            throw new RuntimeException(e);
+        } catch (FlightsException exception) {
+            new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
         }
         try{
             tableId.setItems(FXCollections.observableList(employeeManager.getAll()));

@@ -25,6 +25,10 @@ public class CheckInController {
     public void okButtonAction(ActionEvent actionEvent) {
         boolean incorrectData = false;
             try {
+                if(passportId.getText().length() == 0)
+                    throw new FlightsException("No id specified!");
+                if(flightNumberId.getText().length() == 0)
+                    throw new FlightsException("No id specified!");
                 Persons person = new Persons(Integer.valueOf(passportId.getText()), firstNameId.getText(), lastNameId.getText(), CitizenshipId.getText(), dateId.getValue(), true, flightsManager.getById(Integer.valueOf(flightNumberId.getText())));
                 Persons getFromDB = personsManager.getById(person.getId());
                 if (!getFromDB.getFirstName().equals(firstNameId.getText()) || !getFromDB.getLastName().equals(lastNameId.getText()) || getFromDB.getFlight().getId() != Integer.valueOf(flightNumberId.getText())) {
@@ -36,6 +40,7 @@ public class CheckInController {
                 personsManager.update(person);
             } catch (FlightsException exception) {
                 new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
+                incorrectData = true;
             }
         if(!incorrectData)
         OkButtonId.getScene().getWindow().hide();

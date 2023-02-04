@@ -43,23 +43,32 @@ public class FlightsChangesController {
     }
 
     public void updateButtonAction(ActionEvent actionEvent) {
-        Flights flights = tableId.getSelectionModel().getSelectedItem();
-        Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/updateFlight.fxml"));
-        UpdateFlightController controller = new UpdateFlightController(flights);
-        loader.setController(controller);
-        stage.setTitle("Update flight");
+
         try {
+            if(tableId.getSelectionModel().isEmpty())
+                throw new FlightsException("No rows selected!");
+            Flights flights = tableId.getSelectionModel().getSelectedItem();
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/updateFlight.fxml"));
+            UpdateFlightController controller = new UpdateFlightController(flights);
+            loader.setController(controller);
+            stage.setTitle("Update flight");
+
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            stage.show();
+        } catch (FlightsException exception) {
+            new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
+        } catch (IOException e){
         }
-        stage.show();
+
     }
 
     public void deleteButtonAction(ActionEvent actionEvent) {
-        Flights flight = tableId.getSelectionModel().getSelectedItem();
+
         try {
+            if(tableId.getSelectionModel().isEmpty())
+                throw new FlightsException("No rows selected!");
+            Flights flight = tableId.getSelectionModel().getSelectedItem();
             flightsManager.delete(flight.getId());
             tableId.refresh();
         } catch (FlightsException e) {

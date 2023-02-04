@@ -20,6 +20,8 @@ public class AddFlightController {
     public void okButtonAction(ActionEvent actionEvent) {
         Flights flights = new Flights();
         try{
+            if(flightId.getText().length() == 0)
+                throw new FlightsException("No id specified!");
             flights.setId(Integer.parseInt(flightId.getText()));
             flights.setNameOfAirline(airlineId.getText());
             flights.setCityOfDeparture(departureId.getText());

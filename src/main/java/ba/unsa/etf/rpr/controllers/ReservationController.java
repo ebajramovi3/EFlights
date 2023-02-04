@@ -26,6 +26,8 @@ public class ReservationController {
 
     public void OkAction(ActionEvent actionEvent){
         try{
+            if(PassportId.getText().length() == 0)
+                throw new FlightsException("No id specified!");
             personManager.add(new Persons(Integer.valueOf(PassportId.getText()), FirstNameId.getText(), LastNameId.getText(), null, null, false, flightsManager.getById(id)));
         } catch (FlightsException exception){
             new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();

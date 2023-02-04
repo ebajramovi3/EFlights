@@ -31,6 +31,8 @@ public class LoginController {
 
     public void okButtonAction(ActionEvent actionEvent){
         try{
+            if(UsernameId.getText().length() == 0)
+                throw new FlightsException("No username provided!");
             if(employeeManager.checkPassword(UsernameId.getText(), PasswordId.getText())) {
                 okButton.getScene().getWindow().hide();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AfterLogin.fxml"));
