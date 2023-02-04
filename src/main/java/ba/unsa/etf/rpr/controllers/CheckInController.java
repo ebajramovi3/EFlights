@@ -11,6 +11,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
 
+import java.util.regex.Pattern;
+
 public class CheckInController {
     private final PersonsManager personsManager = new PersonsManager();
     private final FlightsManager flightsManager = new FlightsManager();
@@ -22,6 +24,21 @@ public class CheckInController {
     public DatePicker dateId;
     public Button OkButtonId;
 
+    @FXML
+    public void initialize(){
+        passportId.textProperty().addListener((abs, oldValue, newValue)-> {
+            if(newValue.length() > 0){
+                try {
+                    Persons person = personsManager.getById(Integer.parseInt(newValue.trim()));
+                    flightNumberId.setText(String.valueOf(person.getFlight().getId()));
+                    firstNameId.setText(person.getFirstName());
+                    lastNameId.setText(person.getLastName());
+                } catch (Exception e) {
+                }
+            }
+        });
+    }
+
     public void okButtonAction(ActionEvent actionEvent) {
         boolean incorrectData = false;
             try {
@@ -29,6 +46,9 @@ public class CheckInController {
                     throw new FlightsException("No id specified!");
                 if(flightNumberId.getText().length() == 0)
                     throw new FlightsException("No id specified!");
+                if(!Pattern.compile("[0-9]*").matcher(passportId.getText()).matches())
+                    throw new FlightsException("Invalid password!");
+
                 Persons person = new Persons(Integer.valueOf(passportId.getText()), firstNameId.getText(), lastNameId.getText(), CitizenshipId.getText(), dateId.getValue(), true, flightsManager.getById(Integer.valueOf(flightNumberId.getText())));
                 Persons getFromDB = personsManager.getById(person.getId());
                 if (!getFromDB.getFirstName().equals(firstNameId.getText()) || !getFromDB.getLastName().equals(lastNameId.getText()) || getFromDB.getFlight().getId() != Integer.valueOf(flightNumberId.getText())) {
