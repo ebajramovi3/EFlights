@@ -52,14 +52,15 @@ public class LoginController {
         UsernameId.textProperty().addListener((abs, oldValue, newValue)-> {
             if (newValue.length() >= 5)
                 IncorrectUsername.setText("");
-            else
-                IncorrectUsername.setText("Username must have 5 or more characters.");
+            else {
+                IncorrectUsername.setText("Invalid format");
+            }
         });
         PasswordId.textProperty().addListener((abs, oldValue, newValue)->{
             if(newValue.length() >= 8)
                 IncorrectPassword.setText("");
             else
-                IncorrectPassword.setText("Password must have 8 or more characters.");
+                IncorrectPassword.setText("Invalid format");
         });
     }
 

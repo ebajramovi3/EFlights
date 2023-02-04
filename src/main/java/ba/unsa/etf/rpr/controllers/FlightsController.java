@@ -31,7 +31,7 @@ public class FlightsController {
 
 
     public FlightsController(String cityOfArrival, String cityOfDeparture, LocalDate date){
-        this.flights = new Flights(0, "", cityOfArrival, cityOfDeparture, date);
+        this.flights = new Flights(0, "", cityOfDeparture, cityOfArrival, date);
     }
 
     @FXML
