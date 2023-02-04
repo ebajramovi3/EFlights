@@ -7,22 +7,23 @@ import ba.unsa.etf.rpr.exceptions.FlightsException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static java.time.ZoneId.systemDefault;
 
 public class PersonsManager {
     private void validateFirstName(String fn) throws FlightsException {
-        if(fn == null || fn.length() > 45 || fn.length() < 1)
+        if(fn == null || fn.length() > 45 || fn.length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(fn).matches())
             throw new FlightsException("Invalid first name!");
     }
 
     private void validateLastName(String ln) throws FlightsException{
-        if(ln == null || ln.length() > 45 || ln.length() < 1)
+        if(ln == null || ln.length() > 45 || ln.length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(ln).matches())
             throw new FlightsException("Invalid last name!");
     }
 
     private void validateCitizenship(String cs) throws FlightsException{
-        if(cs != null || cs.length() > 100  || cs.length() < 1)
+        if(cs == null || (cs.length() > 100  || cs.length() < 1) || !Pattern.compile("[a-zA-Z]*").matcher(cs).matches())
             throw new FlightsException("Invalid citizenship!");
     }
 
@@ -31,22 +32,20 @@ public class PersonsManager {
             throw new FlightsException("Invalid date of birth!");
     }
 
-    private void validatePerson(Persons person) throws FlightsException{
-        validateFirstName(person.getFirstName());
-        validateLastName(person.getLastName());
-        validateCitizenship(person.getCitizenship());
-    }
-
     private void trimData(Persons person){
-        person.setFirstName(person.getFirstName().trim());
-        person.setLastName(person.getLastName().trim());
-        person.setCitizenship(person.getCitizenship().trim());
+        if(person.getFirstName() != null)
+             person.setFirstName(person.getFirstName().trim());
+        if(person.getLastName() != null)
+             person.setLastName(person.getLastName().trim());
+        if(person.getCitizenship() != null)
+             person.setCitizenship(person.getCitizenship().trim());
     }
 
     public Persons add(Persons person) throws FlightsException{
         try{
             trimData(person);
-            validatePerson(person);
+            validateFirstName(person.getFirstName());
+            validateLastName(person.getLastName());
             return DaoFactory.personsDao().add(person);
         }catch (Exception e){
             if(e.getMessage().contains("UQ_NAME")){
@@ -57,13 +56,13 @@ public class PersonsManager {
     }
 
     public void update(Persons person) throws FlightsException{
-        try{
             trimData(person);
-            validatePerson(person);
+            validateFirstName(person.getFirstName());
+            validateLastName(person.getLastName());
+            validateCitizenship(person.getCitizenship());
+            validateDateOfBirth(person.getDateOfBirth());
             DaoFactory.personsDao().update(person);
-        } catch (Exception e){
-            throw new FlightsException("No such reservation!");
-        }
+
     }
 
     public Persons getById(int id) throws FlightsException {
