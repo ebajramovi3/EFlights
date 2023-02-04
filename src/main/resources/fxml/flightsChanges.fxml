@@ -1,14 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.FlightsChangesController">
-   <children>
-      <TableView fx:id="tableId" prefHeight="365.0" prefWidth="600.0">
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.FlightsChangesController">
+   <bottom>
+      <GridPane BorderPane.alignment="TOP_CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints valignment="CENTER" vgrow="NEVER" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#addButtonAction" prefHeight="25.0" prefWidth="51.0" text="Add" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+               <GridPane.margin>
+                  <Insets bottom="15.0" top="15.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateButtonAction" text="Update" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+               <GridPane.margin>
+                  <Insets bottom="15.0" top="15.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonAction" text="Delete" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+               <GridPane.margin>
+                  <Insets bottom="15.0" top="15.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+      </GridPane>
+   </bottom>
+   <center>
+      <TableView fx:id="tableId" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="airlineId" prefWidth="134.0" text="Airline" />
           <TableColumn fx:id="flightId" prefWidth="123.0" text="Flight id" />
@@ -17,8 +53,5 @@
             <TableColumn fx:id="dateId" prefWidth="95.0" text="Date" />
         </columns>
       </TableView>
-      <Button fx:id="addButton" layoutX="23.0" layoutY="384.0" mnemonicParsing="false" onAction="#addButtonAction" prefHeight="25.0" prefWidth="51.0" text="Add" />
-      <Button fx:id="updateButton" layoutX="107.0" layoutY="384.0" mnemonicParsing="false" onAction="#updateButtonAction" text="Update" />
-      <Button fx:id="deleteButton" layoutX="514.0" layoutY="384.0" mnemonicParsing="false" onAction="#deleteButtonAction" text="Delete" />
-   </children>
-</AnchorPane>
+   </center>
+</BorderPane>

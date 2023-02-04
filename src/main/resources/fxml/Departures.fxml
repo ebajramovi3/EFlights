@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.DepartureController">
-   <children>
-      <Pane prefHeight="434.0" prefWidth="434.0">
-         <children>
-            <TableView fx:id="tableId" layoutY="43.0">
-              <columns>
-                <TableColumn fx:id="airlineId" editable="false" prefWidth="113.0" resizable="false" text="Airline" />
-                <TableColumn fx:id="destinationId" editable="false" prefWidth="131.0" resizable="false" text="Destination" />
-                  <TableColumn fx:id="flightNumberId" editable="false" prefWidth="113.0" resizable="false" text="Flight number" />
-                  <TableColumn fx:id="dateId" editable="false" prefWidth="75.0" resizable="false" text="Date" />
-              </columns>
-            </TableView>
-            <TextField fx:id="searchFlightsId" layoutX="26.0" layoutY="9.0" onAction="#SearchFlightsAction" promptText="Search flights:" />
-         </children>
-      </Pane>
-   </children>
-</AnchorPane>
+
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.DepartureController">
+   <top>
+      <TextField fx:id="searchFlightsId" onAction="#SearchFlightsAction" promptText="Search flights:" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+         </BorderPane.margin>
+      </TextField>
+   </top>
+   <center>
+      <TableView fx:id="tableId" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="airlineId" editable="false" prefWidth="113.0" resizable="false" text="Airline" />
+          <TableColumn fx:id="destinationId" editable="false" prefWidth="131.0" resizable="false" text="Destination" />
+            <TableColumn fx:id="flightNumberId" editable="false" prefWidth="113.0" resizable="false" text="Flight number" />
+            <TableColumn fx:id="dateId" editable="false" prefWidth="75.0" resizable="false" text="Date" />
+        </columns>
+      </TableView>
+   </center>
+</BorderPane>

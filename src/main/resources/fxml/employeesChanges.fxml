@@ -1,17 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="529.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.EmployeesChangesController">
-   <children>
-      <Button fx:id="addButton" layoutX="32.0" layoutY="353.0" mnemonicParsing="false" onAction="#addButtonAction" prefHeight="25.0" prefWidth="51.0" text="Add" />
-      <Button fx:id="updateButton" layoutX="111.0" layoutY="353.0" mnemonicParsing="false" onAction="#updateButtonAction" text="Update" />
-      <Button fx:id="deleteButton" layoutX="458.0" layoutY="353.0" mnemonicParsing="false" onAction="#deleteButtonAction" text="Delete" />
-      <TableView fx:id="tableId" prefHeight="336.0" prefWidth="529.0">
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controllers.EmployeesChangesController">
+   <bottom>
+      <GridPane BorderPane.alignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints hgrow="NEVER" />
+            <ColumnConstraints hgrow="NEVER" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <HBox alignment="CENTER" GridPane.columnIndex="5">
+               <children>
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonAction" text="Delete">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#addButtonAction" prefHeight="25.0" prefWidth="60.0" text="Add" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateButtonAction" prefHeight="25.0" prefWidth="63.0" text="Update" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+               <GridPane.margin>
+                  <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+      </GridPane>
+   </bottom>
+   <center>
+      <TableView fx:id="tableId" prefHeight="336.0" prefWidth="529.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="employeeId" prefWidth="137.0" text="Employee id" />
           <TableColumn fx:id="lastNameId" prefWidth="132.0" text="Last name" />
@@ -19,5 +57,5 @@
             <TableColumn fx:id="usernameId" prefWidth="134.0" text="Username" />
         </columns>
       </TableView>
-   </children>
-</AnchorPane>
+   </center>
+</BorderPane>
