@@ -11,6 +11,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.regex.Pattern;
+
 public class ReservationController {
     private int id;
     private final PersonsManager personManager = new PersonsManager();
@@ -28,6 +30,9 @@ public class ReservationController {
         try{
             if(PassportId.getText().length() == 0)
                 throw new FlightsException("No id specified!");
+            if(!Pattern.compile("[0-9]*").matcher(PassportId.getText()).matches())
+                throw new FlightsException("Invalid password!");
+
             personManager.add(new Persons(Integer.valueOf(PassportId.getText()), FirstNameId.getText(), LastNameId.getText(), null, null, false, flightsManager.getById(id)));
         } catch (FlightsException exception){
             new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();

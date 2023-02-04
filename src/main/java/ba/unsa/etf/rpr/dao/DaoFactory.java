@@ -8,7 +8,7 @@ public class DaoFactory {
     private static final PersonsDAO person = new PersonsDaoImplementation();
     private static final EmployeesDAO employee = new EmployeesDaoImplementation();
 
-    public DaoFactory() {
+    private DaoFactory() {
     }
 
     public static FlightsDAO flightsDao(){ return flight;}

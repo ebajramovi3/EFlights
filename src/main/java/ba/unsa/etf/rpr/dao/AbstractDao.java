@@ -100,7 +100,7 @@ public abstract class AbstractDao<T extends Idable> implements DAO<T>{
 
             return item;
         }catch (Exception exception){
-            throw new FlightsException("This data already exists!");
+            throw new FlightsException("Id already exists!");
         }
     }
 

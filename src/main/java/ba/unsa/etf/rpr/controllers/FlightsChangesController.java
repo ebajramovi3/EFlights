@@ -37,7 +37,6 @@ public class FlightsChangesController {
         try {
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         } catch (IOException e) {
-            throw new RuntimeException(e);
         }
         stage.show();
     }
@@ -72,7 +71,7 @@ public class FlightsChangesController {
             flightsManager.delete(flight.getId());
             tableId.refresh();
         } catch (FlightsException e) {
-            throw new RuntimeException(e);
+            new Alert(Alert.AlertType.NONE, e.getMessage(), ButtonType.OK).show();
         }
         try{
             tableId.setItems(FXCollections.observableList(flightsManager.getAll()));

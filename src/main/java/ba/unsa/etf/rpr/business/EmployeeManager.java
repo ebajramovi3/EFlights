@@ -57,6 +57,8 @@ public class EmployeeManager {
     }
 
     public Employees getByUsername(String username) throws FlightsException{
+        username = username.trim();
+        validateUsername(username);
         return DaoFactory.employeesDao().getByUsername(username);
     }
 
