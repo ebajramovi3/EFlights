@@ -1,7 +1,6 @@
 package ba.unsa.etf.rpr.domain;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 public class Persons implements Idable{
@@ -23,6 +22,10 @@ public class Persons implements Idable{
 
     public Persons() {
 
+    }
+
+    public Persons getPerson(){
+        return this;
     }
 
     public String getFirstName() {
@@ -84,6 +87,19 @@ public class Persons implements Idable{
     @Override
     public int hashCode() {
         return Objects.hash(passportId, firstName, lastName, citizenship, dateOfBirth, checkIn, flight);
+    }
+
+    @Override
+    public String toString() {
+        return "Persons{" +
+                "passportId=" + passportId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", citizenship='" + citizenship + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", checkIn=" + checkIn +
+                ", flight=" + flight +
+                '}';
     }
 
     /**

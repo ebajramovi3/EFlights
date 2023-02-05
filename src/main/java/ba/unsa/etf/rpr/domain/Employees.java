@@ -17,6 +17,10 @@ public class Employees implements Idable{
     public Employees() {
     }
 
+    public Employees getEmployee(){
+        return this;
+    }
+
     public int getId() {
         return id;
     }
@@ -55,6 +59,16 @@ public class Employees implements Idable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Employees{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                '}';
     }
 
     @Override

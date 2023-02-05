@@ -1,8 +1,6 @@
 package ba.unsa.etf.rpr.domain;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Objects;
 
 public class Flights implements Idable{
     private int id;
@@ -66,5 +64,19 @@ public class Flights implements Idable{
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Flights{" +
+                "nameOfAirline='" + nameOfAirline + '\'' +
+                ", cityOfDeparture='" + cityOfDeparture + '\'' +
+                ", cityOfArrival='" + cityOfArrival + '\'' +
+                ", date=" + date +
+                '}';
+    }
+
+    public Flights getFlight(){
+        return this;
     }
 }
