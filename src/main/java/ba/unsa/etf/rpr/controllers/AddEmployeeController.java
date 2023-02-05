@@ -7,7 +7,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+/**
+ * Controller that adds new employee
+ * @author Esma
+ */
 public class AddEmployeeController {
+    //manager
     private final EmployeeManager employeeManager = new EmployeeManager();
 
     public TextField employeeId;
@@ -35,6 +40,10 @@ public class AddEmployeeController {
         });
     }
 
+    /**
+     * ok button event handler, adds new employee
+     * @param actionEvent
+     */
     public void okButtonAction(ActionEvent actionEvent) {
         try{
             if(employeeId.getText().length() == 0)

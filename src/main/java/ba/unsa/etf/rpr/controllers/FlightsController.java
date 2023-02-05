@@ -12,13 +12,16 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
+/**
+ * JavaFX controller that shows all flights and allows reservation of selected one
+ * @author Esma
+ */
 public class FlightsController {
     private final FlightsManager flightsManager = new FlightsManager();
     public Button ReservationButton;
@@ -51,6 +54,10 @@ public class FlightsController {
         }
     }
 
+    /**
+     * reservation button event handler, opens window for reservation of selected flight
+     * @param actionEvent
+     */
     public void ReservationAction(ActionEvent actionEvent) {
 
         try {
@@ -65,6 +72,7 @@ public class FlightsController {
             loader.setController(controller);
             stage.setTitle("Reservation");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.setResizable(false);
             stage.show();
         } catch (FlightsException exception) {
             new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();

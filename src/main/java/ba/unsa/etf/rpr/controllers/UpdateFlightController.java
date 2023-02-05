@@ -7,6 +7,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+/**
+ * JavaFX controller for update of flights
+ * @author Esma
+ */
 public class UpdateFlightController {
     private Flights flights;
     private final FlightsManager flightsManager = new FlightsManager();
@@ -31,7 +35,10 @@ public class UpdateFlightController {
         dateId.setValue(flights.getDate());
     }
 
-
+    /**
+     * ok button event handler, updates flight based on given data
+     * @param actionEvent
+     */
     public void okButtonAction(ActionEvent actionEvent) {
         try{
             flights.setNameOfAirline(airlineId.getText());

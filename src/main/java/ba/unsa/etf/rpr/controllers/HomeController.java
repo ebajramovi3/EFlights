@@ -1,7 +1,5 @@
 package ba.unsa.etf.rpr.controllers;
 
-import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +13,17 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
+
+/**
+ * JavaFX controller that contains options:
+ * Arrivals(shows all arrivals),
+ * Departures(shows all departures),
+ * Find flights(shows flights based on given data),
+ * Check-in(allows check-in of reserved plane ticket),
+ * Log in(allows log in of employees)
+ * @author Esma
+ */
 public class HomeController {
     public Hyperlink LogInId;
     public Button ArrivalId;
@@ -33,12 +42,17 @@ public class HomeController {
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.setTitle(title);
             stage.initStyle(StageStyle.UTILITY);
+            stage.setResizable(false);
             stage.show();
         }catch (Exception e){
             new Alert(Alert.AlertType.NONE, e.getMessage(), ButtonType.OK).show();
         }
     }
 
+    /**
+     * file->close button event handler
+     * @param actionEvent
+     */
     public void closeApp(ActionEvent actionEvent){
         Platform.exit();
         System.exit(0);
@@ -47,7 +61,10 @@ public class HomeController {
         openDialog("About", "/fxml/about.fxml", null);
     }
 
-
+    /**
+     * arrival button event handler
+     * @param actionEvent
+     */
     public void ArrivalButtonAction(ActionEvent actionEvent) {
         Stage stage = new Stage();
         try {
@@ -56,12 +73,16 @@ public class HomeController {
             //loader.setController(controller);
             stage.setTitle("Arrivals");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * departure button event handler
+     * @param actionEvent
+     */
     public void DepartureButtonAction(ActionEvent actionEvent) {
         Stage stage = new Stage();
         try {
@@ -70,12 +91,17 @@ public class HomeController {
             //loader.setController(controller);
             stage.setTitle("Departures");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * flight button event handler
+     * @param actionEvent
+     */
     public void FlightButtonAction(ActionEvent actionEvent) {
         Stage stage = new Stage();
         try {
@@ -84,12 +110,17 @@ public class HomeController {
             //loader.setController(controller);
             stage.setTitle("Search");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * check-in button event handler
+     * @param actionEvent
+     */
     public void CheckinButtonAction(ActionEvent actionEvent) {
         Stage stage = new Stage();
         try {
@@ -98,12 +129,17 @@ public class HomeController {
             //loader.setController(controller);
             stage.setTitle("Check In");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * log in button event handler
+     * @param actionEvent
+     */
     public void LogInAction(ActionEvent actionEvent) {
         Stage stage = new Stage();
         try {
@@ -112,6 +148,7 @@ public class HomeController {
             //loader.setController(controller);
             stage.setTitle("Log In");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -7,17 +7,17 @@ import java.sql.ResultSet;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * MySQL Implementation of DAO
+ * @author Esma Bajramovic
+ */
+
 public class PersonsDaoImplementation extends AbstractDao<Persons> implements PersonsDAO{
 
     public PersonsDaoImplementation() {
         super("Persons");
     }
 
-    /**
-     * @param rs
-     * @return
-     * @throws FlightsException
-     */
     @Override
     public Persons row2object(ResultSet rs) throws FlightsException {
         try{
@@ -41,10 +41,6 @@ public class PersonsDaoImplementation extends AbstractDao<Persons> implements Pe
         }
     }
 
-    /**
-     * @param object
-     * @return
-     */
     @Override
     public Map<String, Object> object2row(Persons object) {
         Map<String, Object> item = new TreeMap<>();

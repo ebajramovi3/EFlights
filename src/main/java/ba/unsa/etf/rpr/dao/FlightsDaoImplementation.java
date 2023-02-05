@@ -7,17 +7,16 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * MySQL Implementation of DAO
+ * @author Esma Bajramovic
+ */
 public class FlightsDaoImplementation extends AbstractDao<Flights> implements FlightsDAO{
 
     public FlightsDaoImplementation() {
         super("flight");
     }
 
-    /**
-     * @param rs
-     * @return
-     * @throws FlightsException
-     */
     @Override
     public Flights row2object(ResultSet rs) throws FlightsException {
         Flights flight = new Flights();
@@ -39,10 +38,7 @@ public class FlightsDaoImplementation extends AbstractDao<Flights> implements Fl
         }
         return flight;
     }
-    /**
-     * @param object
-     * @return
-     */
+
     @Override
     public Map<String, Object> object2row(Flights object) {
         Map<String, Object> item = new TreeMap<>();
@@ -56,56 +52,32 @@ public class FlightsDaoImplementation extends AbstractDao<Flights> implements Fl
         return item;
     }
 
-    /**
-     * @param dateOfFlight
-     * @return
-     */
     @Override
     public List<Flights> getByDate(LocalDate dateOfFlight) throws FlightsException{
         return executeQuery("SELECT * FROM flight WHERE date = ?", new Object[]{dateOfFlight});
     }
 
     @Override
-    public List<Flights> getByCurrentDate(LocalDate dateOfFlight) throws FlightsException{
-        return executeQuery("SELECT * FROM flight WHERE date >= CURDATE()", new Object[]{dateOfFlight});
+    public List<Flights> getByCurrentDate() throws FlightsException{
+        return executeQuery("SELECT * FROM flight WHERE date >= CURDATE()", new Object[]{});
     }
 
-    /**
-     * @param cityOfArrival
-     * @return
-     * @throws FlightsException
-     */
+
     @Override
     public List<Flights> getByArrival(String cityOfArrival) throws FlightsException {
         return executeQuery("SELECT * FROM flight WHERE ArrivalDestination = ? AND date >= CURDATE()", new Object[]{cityOfArrival});
     }
 
-    /**
-     * @param cityOfDeparture
-     * @return
-     * @throws FlightsException
-     */
     @Override
     public List<Flights> getByDeparture(String cityOfDeparture) throws FlightsException {
         return executeQuery("SELECT * FROM flight WHERE DepartureDestination = ? AND date >= CURDATE()", new Object[]{cityOfDeparture});
     }
 
-    /**
-     * @param flight
-     * @return
-     * @throws FlightsException
-     */
     @Override
     public List<Flights> searchFlight(Flights flight) throws FlightsException {
         return executeQuery("SELECT * FROM flight WHERE ArrivalDestination = ? AND date = ?  AND date >= CURDATE() AND DepartureDestination = ? ", new Object[]{flight.getCityOfArrival(), flight.getDate(), flight.getCityOfDeparture()});
     }
 
-    /**
-     * @param cityOfArrival
-     * @param cityOfDeparture
-     * @return
-     * @throws FlightsException
-     */
     @Override
     public List<Flights> searchByArrivalDeparture(String cityOfArrival, String cityOfDeparture) throws FlightsException {
         return executeQuery("SELECT * FROM flight WHERE ArrivalDestination = ? AND DepartureDestination = ? AND date >= CURDATE()", new Object[]{ cityOfArrival, cityOfDeparture});

@@ -11,27 +11,41 @@ import java.util.regex.Pattern;
 
 import static java.time.ZoneId.systemDefault;
 
+/**
+ * Business Logic Layer for management of Persons
+ *
+ * @author Esma Bajramovic
+ */
 public class PersonsManager {
-    private void validateFirstName(String fn) throws FlightsException {
-        if(fn == null || fn.trim().length() > 45 || fn.trim().length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(fn).matches())
+    public void validateFirstName(String fn) throws FlightsException {
+        if(fn == null || fn.trim().length() > 20 || fn.trim().length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(fn).matches())
             throw new FlightsException("Invalid first name!");
     }
 
-    private void validateLastName(String ln) throws FlightsException{
-        if(ln == null || ln.trim().length() > 45 || ln.trim().length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(ln).matches())
+    public void validateLastName(String ln) throws FlightsException{
+        if(ln == null || ln.trim().length() > 20 || ln.trim().length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(ln).matches())
             throw new FlightsException("Invalid last name!");
     }
 
-    private void validateCitizenship(String cs) throws FlightsException{
+    public void validateCitizenship(String cs) throws FlightsException{
         if(cs == null || (cs.trim().length() > 100  || cs.trim().length() < 1) || !Pattern.compile("[a-zA-Z]*").matcher(cs).matches())
             throw new FlightsException("Invalid citizenship!");
     }
 
-    private void validateDateOfBirth(LocalDate dateOfBirth) throws FlightsException{
+    /**
+     * checks date of birth
+     * @param dateOfBirth
+     * @throws FlightsException
+     */
+    public void validateDateOfBirth(LocalDate dateOfBirth) throws FlightsException{
         if((dateOfBirth == null) || dateOfBirth.compareTo(Instant.ofEpochMilli(Instant.now().toEpochMilli()).atZone(systemDefault()).toLocalDate()) >= 0)
             throw new FlightsException("Invalid date of birth!");
     }
 
+    /**
+     * removes whitespace from both ends of a string
+     * @param person
+     */
     private void trimData(Persons person){
         if(person.getFirstName() != null)
              person.setFirstName(person.getFirstName().trim());

@@ -9,10 +9,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.util.regex.Pattern;
 
+/**
+ * JavaFX controller for reservation of plane ticket
+ * @author Esma
+ */
 public class ReservationController {
     private int id;
     private final PersonsManager personManager = new PersonsManager();
@@ -26,6 +29,10 @@ public class ReservationController {
     public TextField PassportId;
     public Button OkButtonId;
 
+    /**
+     * ok button event handler
+     * @param actionEvent
+     */
     public void OkAction(ActionEvent actionEvent){
         try{
             if(PassportId.getText().length() == 0)

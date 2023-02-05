@@ -6,13 +6,13 @@ import ba.unsa.etf.rpr.domain.Persons;
 import ba.unsa.etf.rpr.exceptions.FlightsException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
-import javafx.scene.input.MouseEvent;
 
 import java.util.regex.Pattern;
 
+/**
+ * JavaFX controller for check in
+ */
 public class CheckInController {
     private final PersonsManager personsManager = new PersonsManager();
     private final FlightsManager flightsManager = new FlightsManager();
@@ -39,6 +39,10 @@ public class CheckInController {
         });
     }
 
+    /**
+     * ok button event handler
+     * @param actionEvent
+     */
     public void okButtonAction(ActionEvent actionEvent) {
         boolean incorrectData = false;
             try {
@@ -63,7 +67,7 @@ public class CheckInController {
                 incorrectData = true;
             }
         if(!incorrectData)
-        OkButtonId.getScene().getWindow().hide();
+            OkButtonId.getScene().getWindow().hide();
     }
 
 

@@ -13,10 +13,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Date;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
+/**
+ * JavaFX controller for add, delete and update of employee data
+ * @author Esma
+ */
 public class EmployeesChangesController {
     private final EmployeeManager employeeManager = new EmployeeManager();
 
@@ -29,6 +32,10 @@ public class EmployeesChangesController {
     public TableColumn<Employees, String> firstNameId;
     public TableColumn<Employees, String> usernameId;
 
+    /**
+     * add button event handler, opens window for adding new employee
+     * @param actionEvent
+     */
     public void addButtonAction(ActionEvent actionEvent) {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/addEmployee.fxml"));
@@ -37,9 +44,14 @@ public class EmployeesChangesController {
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         } catch (IOException e) {
         }
+        stage.setResizable(false);
         stage.show();
     }
 
+    /**
+     * update button event handler, opens new window for update of selected employee data
+     * @param actionEvent
+     */
     public void updateButtonAction(ActionEvent actionEvent) {
         try {
             if(tableId.getSelectionModel().isEmpty())
@@ -53,6 +65,7 @@ public class EmployeesChangesController {
             stage.setTitle("Update employee");
 
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.setResizable(false);
             stage.show();
         } catch (FlightsException exception) {
             new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
@@ -61,6 +74,10 @@ public class EmployeesChangesController {
 
     }
 
+    /**
+     * delete button event handler, deletes selected employee data
+     * @param actionEvent
+     */
     public void deleteButtonAction(ActionEvent actionEvent) {
         Employees employee = tableId.getSelectionModel().getSelectedItem();
         try {

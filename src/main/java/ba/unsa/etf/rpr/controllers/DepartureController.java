@@ -11,6 +11,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.Date;
 
+/**
+ * JavaFX controller for display of all departures
+ * @author Esma
+ */
 public class DepartureController {
     FlightsManager departureManager = new FlightsManager();
 
@@ -36,6 +40,10 @@ public class DepartureController {
         }
     }
 
+    /**
+     * search button event handler, shows only flights for given departure city
+     * @param actionEvent
+     */
     public void SearchFlightsAction(ActionEvent actionEvent) {
         try{
             tableId.setItems(FXCollections.observableList(departureManager.searchArrivalsDepartures(searchFlightsId.getText(), "Sarajevo")));

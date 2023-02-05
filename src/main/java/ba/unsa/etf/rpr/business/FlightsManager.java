@@ -11,36 +11,45 @@ import java.util.regex.Pattern;
 
 import static java.time.ZoneId.systemDefault;
 
+/**
+ * Business Logic Layer for management of Flights
+ *
+ * @author Esma Bajramovic
+ */
 public class FlightsManager {
-    private void validateCity(String city) throws FlightsException{
+    public void validateCity(String city) throws FlightsException{
         if(city == null || city.trim().length() < 1 || city.trim().length()> 45 || !Pattern.compile("[a-zA-Z]*").matcher(city).matches())
             throw new FlightsException("Invalid city!");
     }
 
-    private void validateAirline(String airlineName) throws FlightsException{
+    public void validateAirline(String airlineName) throws FlightsException{
         if(airlineName == null || airlineName.trim().length() < 1 || airlineName.trim().length()> 45 || !Pattern.compile("[a-zA-Z]*").matcher(airlineName).matches())
             throw new FlightsException("Invalid airline!");
     }
 
-    private void validateDate(LocalDate date) throws FlightsException{
+    public void validateDate(LocalDate date) throws FlightsException{
         if((date == null) || date.compareTo(Instant.ofEpochMilli(Instant.now().toEpochMilli()).atZone(systemDefault()).toLocalDate()) < 0)
             throw new FlightsException("Invalid date!");
     }
 
-    private void validateFlight(Flights flights) throws FlightsException{
+    public void validateFlight(Flights flights) throws FlightsException{
         validateAirline(flights.getNameOfAirline());
         validateCity(flights.getCityOfDeparture());
         validateCity(flights.getCityOfArrival());
         validateDate(flights.getDate());
     }
 
-    private void trimData(Flights flights){
+    /**
+     * removes whitespace from both ends of a string
+     * @param flights
+     */
+    public void trimData(Flights flights){
         if(flights.getCityOfArrival() != null)
-        flights.setCityOfArrival(flights.getCityOfArrival().trim());
+            flights.setCityOfArrival(flights.getCityOfArrival().trim());
         if(flights.getCityOfDeparture() != null)
-        flights.setCityOfDeparture(flights.getCityOfDeparture().trim());
+            flights.setCityOfDeparture(flights.getCityOfDeparture().trim());
         if(flights.getNameOfAirline() != null)
-        flights.setNameOfAirline(flights.getNameOfAirline().trim());
+            flights.setNameOfAirline(flights.getNameOfAirline().trim());
     }
     public void delete(int id) throws FlightsException {
             DaoFactory.flightsDao().delete(id);
@@ -102,7 +111,9 @@ public class FlightsManager {
     }
 
     public List<Flights> getByCurrentDate() throws FlightsException {
-        return DaoFactory.flightsDao().getByCurrentDate(Instant.ofEpochMilli(Instant.now().toEpochMilli()).atZone(systemDefault()).toLocalDate());
+        return DaoFactory.flightsDao().getByCurrentDate();
     }
+
+
 }
 

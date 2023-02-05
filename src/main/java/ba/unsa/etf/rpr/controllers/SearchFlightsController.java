@@ -1,19 +1,18 @@
 package ba.unsa.etf.rpr.controllers;
 
-import ba.unsa.etf.rpr.domain.Flights;
 import ba.unsa.etf.rpr.exceptions.FlightsException;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.Date;
-
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
+/**
+ * JavaFX controller that allows to provide information for flight
+ * @author Esma
+ */
 public class SearchFlightsController {
     public TextField DepartureId;
     public TextField ArrivalId;
@@ -21,11 +20,19 @@ public class SearchFlightsController {
     public Button cancelButton;
     public Button SearchButtonId;
 
+    /**
+     * cancel button event handler
+     * @param actionEvent
+     */
     public void CancelButtonAction(ActionEvent actionEvent) {
         Stage stage = (Stage) DepartureId.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * search button event handler, opens window with all flights that contain provided data
+     * @param actionEvent
+     */
     public void SearchButtonAction(ActionEvent actionEvent) {
         Stage stage = new Stage();
         try {
@@ -36,6 +43,7 @@ public class SearchFlightsController {
             loader.setController(controller);
             stage.setTitle("Flights");
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.setResizable(false);
             stage.show();
             SearchButtonId.getScene().getWindow().hide();
         } catch (Exception exception) {

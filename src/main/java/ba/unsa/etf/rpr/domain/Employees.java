@@ -2,6 +2,9 @@ package ba.unsa.etf.rpr.domain;
 
 import java.util.Objects;
 
+/**
+ * @author Esma Bajramovic
+ */
 public class Employees implements Idable{
     private int id;
     private String firstName, lastName, username, password;

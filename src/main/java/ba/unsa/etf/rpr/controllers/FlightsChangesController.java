@@ -17,6 +17,10 @@ import java.util.Date;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
+/**
+ * JavaFX controller for add, delete and update of flights
+ * @author Esma
+ */
 public class FlightsChangesController {
     private final FlightsManager flightsManager = new FlightsManager();
 
@@ -30,6 +34,10 @@ public class FlightsChangesController {
     public Button updateButton;
     public Button deleteButton;
 
+    /**
+     * add button event handler
+     * @param actionEvent
+     */
     public void addButtonAction(ActionEvent actionEvent) {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/addFlight.fxml"));
@@ -38,9 +46,14 @@ public class FlightsChangesController {
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         } catch (IOException e) {
         }
+        stage.setResizable(false);
         stage.show();
     }
 
+    /**
+     * update button event handler, opens window that allows update of selected flight
+     * @param actionEvent
+     */
     public void updateButtonAction(ActionEvent actionEvent) {
 
         try {
@@ -54,6 +67,7 @@ public class FlightsChangesController {
             stage.setTitle("Update flight");
 
             stage.setScene(new Scene(loader.load(), USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.setResizable(false);
             stage.show();
         } catch (FlightsException exception) {
             new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
@@ -62,6 +76,10 @@ public class FlightsChangesController {
 
     }
 
+    /**
+     * delete button event handler, deletes selected flight
+     * @param actionEvent
+     */
     public void deleteButtonAction(ActionEvent actionEvent) {
 
         try {

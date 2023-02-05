@@ -7,28 +7,58 @@ import ba.unsa.etf.rpr.exceptions.FlightsException;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ * Business Logic Layer for management of Employees
+ *
+ * @author Esma Bajramovic
+ */
+
 public class EmployeeManager {
-    private void validateUsername(String username) throws FlightsException{
+    /**
+     * Method checks username
+     * @param username
+     * @throws FlightsException
+     */
+    public void validateUsername(String username) throws FlightsException{
         if(username == null || username.trim().length() <5 || username.trim().length() > 20)
             throw new FlightsException("Invalid username!");
     }
 
-    private void validatePassword(String password) throws FlightsException{
+    /**
+     * Method checks password
+     * @param password
+     * @throws FlightsException
+     */
+    public void validatePassword(String password) throws FlightsException{
         if(password == null || password.trim().length() < 8 || password.trim().length() > 20)
             throw new FlightsException("Invalid password!");
     }
 
-    private void validateFirstName(String fn) throws FlightsException{
-        if(fn == null || fn.trim().length() > 45 || fn.trim().length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(fn).matches())
+    /**
+     * Method checks first name
+     * @param firstName
+     * @throws FlightsException
+     */
+    public void validateFirstName(String firstName) throws FlightsException{
+        if(firstName == null || firstName.trim().length() > 20 || firstName.trim().length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(firstName).matches())
             throw new FlightsException("Invalid first name!");
     }
 
-    private void validateLastName(String ln) throws FlightsException{
-        if(ln == null || ln.trim().length() > 45 || ln.trim().length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(ln).matches())
+    /**
+     * Method checks last name
+     * @param lastName
+     * @throws FlightsException
+     */
+    public void validateLastName(String lastName) throws FlightsException{
+        if(lastName == null || lastName.trim().length() > 20 || lastName.trim().length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(lastName).matches())
             throw new FlightsException("Invalid last name!");
     }
 
-    private void trimData(Employees employees){
+    /**
+     * removes whitespace from both ends of a string
+     * @param employees
+     */
+    public void trimData(Employees employees){
         if(employees.getFirstName() != null)
             employees.setFirstName(employees.getFirstName().trim());
         if(employees.getLastName() != null)
@@ -38,6 +68,7 @@ public class EmployeeManager {
         if(employees.getPassword() != null)
             employees.setPassword(employees.getPassword().trim());
     }
+
 
     public void delete(int id) throws FlightsException {
         DaoFactory.employeesDao().delete(id);
@@ -62,12 +93,24 @@ public class EmployeeManager {
         return DaoFactory.employeesDao().getByUsername(username);
     }
 
+    /**
+     * checks if given password is correct for entered username
+     * @param username
+     * @param password
+     * @throws FlightsException
+     */
     public boolean checkPassword(String username, String password) throws FlightsException{
         Employees employee = getByUsername(username);
         if(!employee.getPassword().equals(password))
             throw new FlightsException("Incorrect password!");
         return employee.getPassword().equals(password);
     }
+
+    /**
+     * @param employee
+     * @return updated object
+     * @throws FlightsException
+     */
 
     public Employees update(Employees employee) throws FlightsException {
         trimData(employee);

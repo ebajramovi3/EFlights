@@ -11,6 +11,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.Date;
 
+/**
+ * JavaFX controller for display of all arrivals
+ * @author Esma
+ */
 public class ArrivalsController {
     private final FlightsManager arrivalManager = new FlightsManager();
 
@@ -35,6 +39,10 @@ public class ArrivalsController {
         }
     }
 
+    /**
+     * search button event handler
+     * @param actionEvent
+     */
     public void SearchAction(ActionEvent actionEvent) {
         try{
             tableId.setItems(FXCollections.observableList(arrivalManager.searchArrivalsDepartures("Sarajevo", searchId.getText())));

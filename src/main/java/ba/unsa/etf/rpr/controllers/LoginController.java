@@ -1,7 +1,6 @@
 package ba.unsa.etf.rpr.controllers;
 
 import ba.unsa.etf.rpr.business.EmployeeManager;
-import ba.unsa.etf.rpr.domain.Employees;
 import ba.unsa.etf.rpr.exceptions.FlightsException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +13,10 @@ import java.io.IOException;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
+/**
+ * JavaFX controller for login of employees, allows update, add and delete after login
+ * @author Esma
+ */
 public class LoginController {
     private final EmployeeManager employeeManager = new EmployeeManager();
 
@@ -24,11 +27,19 @@ public class LoginController {
     public Label IncorrectPassword;
     public Button CancelButton;
 
+    /**
+     * cancel button event handler
+     * @param actionEvent
+     */
     public void CancelButtonAction(ActionEvent actionEvent) {
         Stage stage = (Stage) UsernameId.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * ok button event handler
+     * @param actionEvent
+     */
     public void okButtonAction(ActionEvent actionEvent){
         try{
             if(UsernameId.getText().length() == 0)
@@ -43,7 +54,9 @@ public class LoginController {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                stage.show();}
+                stage.setResizable(false);
+                stage.show();
+            }
             }catch(FlightsException exception) {
                 new Alert(Alert.AlertType.NONE, exception.getMessage(), ButtonType.OK).show();
             }

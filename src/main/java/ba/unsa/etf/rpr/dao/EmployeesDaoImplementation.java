@@ -8,17 +8,17 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * MySQL Implementation of DAO
+ * @author Esma Bajramovic
+ */
+
 public class EmployeesDaoImplementation extends AbstractDao<Employees> implements EmployeesDAO{
 
     public EmployeesDaoImplementation() {
         super("Employees");
     }
 
-    /**
-     * @param rs
-     * @return
-     * @throws FlightsException
-     */
     @Override
     public Employees row2object(ResultSet rs) throws FlightsException {
         try {
@@ -36,10 +36,7 @@ public class EmployeesDaoImplementation extends AbstractDao<Employees> implement
         }
     }
 
-    /**
-     * @param object
-     * @return
-     */
+
     @Override
     public Map<String, Object> object2row(Employees object) {
         Map<String, Object> item = new TreeMap<>();
@@ -53,10 +50,6 @@ public class EmployeesDaoImplementation extends AbstractDao<Employees> implement
         return item;
     }
 
-    /**
-     * @param username
-     * @return
-     */
     @Override
     public Employees getByUsername(String username) throws FlightsException{
         return executeQueryUnique("SELECT * FROM Employees WHERE Username = ?", new Object[]{username});

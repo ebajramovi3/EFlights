@@ -7,6 +7,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+/**
+ * JavaFX controller for update of employee data
+ * @author Esma
+ */
 public class UpdateEmployeeController {
     private Employees employees;
     private final EmployeeManager employeeManager = new EmployeeManager();
@@ -52,6 +56,10 @@ public class UpdateEmployeeController {
         });
     }
 
+    /**
+     * ok button event handler, update employee data
+     * @param actionEvent
+     */
     public void okButtonAction(ActionEvent actionEvent) {
         try {
             employeeManager.checkPassword(employees.getUsername(), oldPassword.getText());

@@ -1,8 +1,10 @@
 package ba.unsa.etf.rpr.dao;
 
-import ba.unsa.etf.rpr.domain.*;
-import ba.unsa.etf.rpr.exceptions.FlightsException;
-
+/**
+ * Factory method for singleton implementation of DAOs
+ *
+ * @author Esma Bajramovic
+ */
 public class DaoFactory {
     private static final FlightsDAO flight = new FlightsDaoImplementation();
     private static final PersonsDAO person = new PersonsDaoImplementation();

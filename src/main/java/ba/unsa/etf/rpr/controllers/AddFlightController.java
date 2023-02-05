@@ -6,6 +6,10 @@ import ba.unsa.etf.rpr.exceptions.FlightsException;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 
+/**
+ * Controller that adds new flight
+ * @author Esma
+ */
 public class AddFlightController {
     private final FlightsManager flightsManager = new FlightsManager();
 
@@ -16,7 +20,10 @@ public class AddFlightController {
     public DatePicker dateId;
     public Button okButton;
 
-
+    /**
+     * ok button event handler, adds flight
+     * @param actionEvent
+     */
     public void okButtonAction(ActionEvent actionEvent) {
         Flights flights = new Flights();
         try{

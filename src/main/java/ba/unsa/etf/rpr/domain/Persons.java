@@ -3,6 +3,9 @@ package ba.unsa.etf.rpr.domain;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * @author Esma Bajramovic
+ */
 public class Persons implements Idable{
     private int passportId;
     private String firstName, lastName, citizenship;
