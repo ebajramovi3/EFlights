@@ -13,17 +13,17 @@ import static java.time.ZoneId.systemDefault;
 
 public class PersonsManager {
     private void validateFirstName(String fn) throws FlightsException {
-        if(fn == null || fn.length() > 45 || fn.length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(fn).matches())
+        if(fn == null || fn.trim().length() > 45 || fn.trim().length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(fn).matches())
             throw new FlightsException("Invalid first name!");
     }
 
     private void validateLastName(String ln) throws FlightsException{
-        if(ln == null || ln.length() > 45 || ln.length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(ln).matches())
+        if(ln == null || ln.trim().length() > 45 || ln.trim().length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(ln).matches())
             throw new FlightsException("Invalid last name!");
     }
 
     private void validateCitizenship(String cs) throws FlightsException{
-        if(cs == null || (cs.length() > 100  || cs.length() < 1) || !Pattern.compile("[a-zA-Z]*").matcher(cs).matches())
+        if(cs == null || (cs.trim().length() > 100  || cs.trim().length() < 1) || !Pattern.compile("[a-zA-Z]*").matcher(cs).matches())
             throw new FlightsException("Invalid citizenship!");
     }
 

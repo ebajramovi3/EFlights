@@ -9,22 +9,22 @@ import java.util.regex.Pattern;
 
 public class EmployeeManager {
     private void validateUsername(String username) throws FlightsException{
-        if(username == null || username.length() <5 || username.length() > 20)
+        if(username == null || username.trim().length() <5 || username.trim().length() > 20)
             throw new FlightsException("Invalid username!");
     }
 
     private void validatePassword(String password) throws FlightsException{
-        if(password == null || password.length() < 8 || password.length() > 20)
+        if(password == null || password.trim().length() < 8 || password.trim().length() > 20)
             throw new FlightsException("Invalid password!");
     }
 
     private void validateFirstName(String fn) throws FlightsException{
-        if(fn == null || fn.length() > 45 || fn.length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(fn).matches())
+        if(fn == null || fn.trim().length() > 45 || fn.trim().length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(fn).matches())
             throw new FlightsException("Invalid first name!");
     }
 
     private void validateLastName(String ln) throws FlightsException{
-        if(ln == null || ln.length() > 45 || ln.length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(ln).matches())
+        if(ln == null || ln.trim().length() > 45 || ln.trim().length() < 1 || !Pattern.compile("[a-zA-Z]*").matcher(ln).matches())
             throw new FlightsException("Invalid last name!");
     }
 

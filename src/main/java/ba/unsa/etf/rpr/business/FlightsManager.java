@@ -1,13 +1,11 @@
 package ba.unsa.etf.rpr.business;
 
+import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.domain.Flights;
 import ba.unsa.etf.rpr.exceptions.FlightsException;
-import ba.unsa.etf.rpr.dao.DaoFactory;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -15,12 +13,12 @@ import static java.time.ZoneId.systemDefault;
 
 public class FlightsManager {
     private void validateCity(String city) throws FlightsException{
-        if(city == null || city.length() < 1 || city.length()> 45 || !Pattern.compile("[a-zA-Z]*").matcher(city).matches())
+        if(city == null || city.trim().length() < 1 || city.trim().length()> 45 || !Pattern.compile("[a-zA-Z]*").matcher(city).matches())
             throw new FlightsException("Invalid city!");
     }
 
     private void validateAirline(String airlineName) throws FlightsException{
-        if(airlineName == null || airlineName.length() < 1 || airlineName.length()> 45 || !Pattern.compile("[a-zA-Z]*").matcher(airlineName).matches())
+        if(airlineName == null || airlineName.trim().length() < 1 || airlineName.trim().length()> 45 || !Pattern.compile("[a-zA-Z]*").matcher(airlineName).matches())
             throw new FlightsException("Invalid airline!");
     }
 
