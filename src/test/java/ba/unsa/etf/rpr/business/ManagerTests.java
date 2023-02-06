@@ -1,6 +1,5 @@
 package ba.unsa.etf.rpr.business;
 
-import ba.unsa.etf.rpr.dao.DaoFactory;
 import ba.unsa.etf.rpr.dao.EmployeesDaoImplementation;
 import ba.unsa.etf.rpr.domain.Employees;
 import ba.unsa.etf.rpr.domain.Flights;
@@ -9,7 +8,6 @@ import ba.unsa.etf.rpr.exceptions.FlightsException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
@@ -19,7 +17,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
 
 public class ManagerTests {
     private EmployeeManager employeeManager;
@@ -88,7 +85,7 @@ public class ManagerTests {
     }
 
     /**
-     * Method tests validateFlight(Flights flight) for correct passed parameters
+     * Method tests validateUsername for incorrect passed parameters
      * @throws FlightsException
      */
     @Test
@@ -98,23 +95,13 @@ public class ManagerTests {
     }
 
     /**
-     * Adding employee
+     * Method tests validateUsername for whitespaces provided
      * @throws FlightsException
      */
     @Test
-    void addEmployee() throws FlightsException {
-        MockedStatic<DaoFactory> daoFactoryMockedStatic = Mockito.mockStatic(DaoFactory.class);
-        daoFactoryMockedStatic.when(DaoFactory::employeesDao).thenReturn(employeeDaoSQLMock);
-        when(DaoFactory.employeesDao().getAll()).thenReturn(employees);
-        when(employeeManager.getAll()).thenReturn(employees);
-
-        Employees employees1 = new Employees(5, "Regina", "Turner", "rturner", "oksjde28ud");
-        Mockito.doCallRealMethod().when(employeeManager).add(employees1);
-        employeeManager.add(employees1);
-
-        Assertions.assertTrue(true);
-        Mockito.verify(employeeManager).add(employees1);
-        daoFactoryMockedStatic.close();
+    void validateNoUsername(){
+        String noUsername = "     ";
+        assertThrows(FlightsException.class, () -> (new EmployeeManager()).validateUsername(noUsername), "Invalid username!" );
     }
 
     /**
